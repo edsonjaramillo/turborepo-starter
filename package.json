@@ -1,0 +1,23 @@
+{
+	"name": "turborepo-starter",
+	"private": true,
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"format": "turbo run format && oxfmt .oxfmtrc.json package.json pnpm-workspace.yaml README.md turbo.json",
+		"format:check": "turbo run format:check && oxfmt --check .oxfmtrc.json package.json pnpm-workspace.yaml README.md turbo.json",
+		"lint": "turbo run lint",
+		"lint:fix": "turbo run lint:fix",
+		"check-types": "turbo run check-types"
+	},
+	"devDependencies": {
+		"oxfmt": "^0.50.0",
+		"oxlint": "^1.27.0",
+		"turbo": "^2.9.14",
+		"typescript": "5.9.2"
+	},
+	"engines": {
+		"node": ">=18"
+	},
+	"packageManager": "pnpm@9.0.0"
+}

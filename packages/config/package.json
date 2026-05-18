@@ -1,0 +1,20 @@
+{
+	"name": "@repo/config",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		"./oxlint/library.json": "./oxlint/library.json",
+		"./oxlint/react.json": "./oxlint/react.json",
+		"./typescript/base.json": "./typescript/base.json",
+		"./typescript/react-library.json": "./typescript/react-library.json",
+		"./typescript/tanstack-start.json": "./typescript/tanstack-start.json"
+	},
+	"scripts": {
+		"format": "oxfmt package.json typescript",
+		"format:check": "oxfmt --check package.json typescript"
+	},
+	"devDependencies": {
+		"typescript": "^5.9.2"
+	}
+}
