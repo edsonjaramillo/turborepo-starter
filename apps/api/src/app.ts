@@ -16,8 +16,8 @@ export const app = new Elysia({ adapter: node() })
 			mapJsonSchema: { zod: z.toJSONSchema },
 			documentation: {
 				info: {
-					title: "Nx Monorepo API",
-					description: "API documentation for the Nx Monorepo project",
+					title: "Turborepo Monorepo API",
+					description: "API documentation for the Turborepo project",
 					version: packageJson.version,
 				},
 			},

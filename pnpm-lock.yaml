@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@infisical/cli':
+        specifier: ^0.43.84
+        version: 0.43.84
       oxfmt:
         specifier: ^0.50.0
         version: 0.50.0

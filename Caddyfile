@@ -1,0 +1,11 @@
+{
+  local_certs
+}
+
+web.localhost {
+  reverse_proxy host.docker.internal:3000
+}
+
+api.localhost {
+  reverse_proxy host.docker.internal:8080
+}

@@ -4,6 +4,8 @@
 	"scripts": {
 		"build": "turbo run build",
 		"dev": "turbo run dev",
+		"docker:down": "infisical run -- docker compose down",
+		"docker:up": "infisical run -- docker compose up -d",
 		"format": "turbo run format && oxfmt .oxfmtrc.json package.json pnpm-workspace.yaml README.md turbo.json",
 		"format:check": "turbo run format:check && oxfmt --check .oxfmtrc.json package.json pnpm-workspace.yaml README.md turbo.json",
 		"lint": "turbo run lint",
@@ -11,6 +13,7 @@
 		"check-types": "turbo run check-types"
 	},
 	"devDependencies": {
+		"@infisical/cli": "^0.43.84",
 		"oxfmt": "^0.50.0",
 		"oxlint": "^1.27.0",
 		"turbo": "^2.9.14",

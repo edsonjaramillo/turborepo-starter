@@ -1,0 +1,51 @@
+name: tuborepo-example
+volumes:
+  postgres_data:
+  cache_data:
+  caddy_data:
+  caddy_config:
+services:
+  postgres:
+    hostname: turborepo-example-postgres
+    container_name: turborepo-example-postgres
+    image: postgres:18.0-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    depends_on:
+      redis:
+        condition: service_started
+    restart: unless-stopped
+  redis:
+    hostname: turborepo-example-redis
+    container_name: turborepo-example-redis
+    image: redis:8.2.3-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - cache_data:/data
+    command: redis-server --save 60 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
+    restart: unless-stopped
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - caddy_network
+networks:
+  caddy_network:
+    driver: bridge
