@@ -1,0 +1,24 @@
+{
+	"name": "@repo/validation",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		"./*": "./src/*.ts"
+	},
+	"scripts": {
+		"format": "oxfmt .",
+		"format:check": "oxfmt --check .",
+		"lint": "oxlint src --config oxlint.json --max-warnings 0",
+		"lint:fix": "oxlint src --config oxlint.json --fix --max-warnings 0",
+		"check-types": "tsc --noEmit"
+	},
+	"dependencies": {
+		"zod": "^4.4.3"
+	},
+	"devDependencies": {
+		"@repo/config": "workspace:*",
+		"@types/node": "^25.8.0",
+		"typescript": "5.9.2"
+	}
+}
