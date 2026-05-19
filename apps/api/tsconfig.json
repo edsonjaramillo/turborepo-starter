@@ -1,0 +1,15 @@
+{
+	"extends": "@repo/config/typescript/base.json",
+	"compilerOptions": {
+		"lib": ["ESNext"],
+		"module": "Preserve",
+		"moduleResolution": "Bundler",
+		"allowImportingTsExtensions": true,
+		"exactOptionalPropertyTypes": true,
+		"noEmit": true,
+		"noUncheckedSideEffectImports": true,
+		"types": ["node"],
+		"verbatimModuleSyntax": true
+	},
+	"include": ["src/**/*.ts"]
+}
