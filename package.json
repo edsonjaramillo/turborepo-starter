@@ -14,11 +14,11 @@
 		"check-types": "turbo run check-types"
 	},
 	"devDependencies": {
-		"@infisical/cli": "^0.43.84",
-		"oxfmt": "^0.50.0",
-		"oxlint": "^1.27.0",
-		"turbo": "^2.9.14",
-		"typescript": "5.9.2"
+		"@infisical/cli": "catalog:",
+		"@typescript/native-preview": "catalog:",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:",
+		"turbo": "^2.9.14"
 	},
 	"engines": {
 		"node": ">=18"

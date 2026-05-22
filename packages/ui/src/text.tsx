@@ -23,6 +23,7 @@ export const textVariants = cva("antialiased", {
 			muted: "text-muted",
 			white: "text-white",
 			primary: "text-primary",
+			danger: "text-danger",
 		},
 	},
 	compoundVariants: [{ size: ["xl", "2xl", "3xl", "4xl"], className: "tracking-tight" }],

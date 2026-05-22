@@ -18,13 +18,13 @@
 		"format": "oxfmt .",
 		"format:check": "oxfmt --check .",
 		"lint": "oxlint src drizzle.config.ts --max-warnings 0",
-		"lint:fix": "oxlint src vite.config.ts --fix --max-warnings 0"
+		"lint:fix": "oxlint src drizzle.config.ts --fix --max-warnings 0"
 	},
 	"dependencies": {
 		"@elysia/cors": "^1.4.2",
 		"@elysia/openapi": "^1.4.15",
 		"@elysiajs/node": "^1.4.5",
-		"@infisical/cli": "^0.43.84",
+		"@infisical/cli": "catalog:",
 		"@repo/http": "workspace:*",
 		"@repo/validation": "workspace:*",
 		"argon2": "^0.44.0",
@@ -33,14 +33,16 @@
 		"elysia": "^1.4.28",
 		"pg": "^8.20.0",
 		"uuidv7": "^1.2.1",
-		"zod": "^4.4.3"
+		"zod": "catalog:"
 	},
 	"devDependencies": {
 		"@repo/config": "workspace:*",
-		"@types/node": "^25.8.0",
+		"@types/node": "catalog:",
 		"@types/pg": "^8.20.0",
+		"@typescript/native-preview": "catalog:",
 		"drizzle-kit": "1.0.0-beta.22",
-		"tsx": "^4.22.1",
-		"typescript": "^6.0.3"
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:",
+		"tsx": "^4.22.1"
 	}
 }

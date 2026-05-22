@@ -12,10 +12,13 @@
 		"./typescript/tanstack-start.json": "./typescript/tanstack-start.json"
 	},
 	"scripts": {
-		"format": "oxfmt package.json typescript",
-		"format:check": "oxfmt --check package.json typescript"
+		"format": "oxfmt oxlint package.json typescript",
+		"format:check": "oxfmt --check oxlint package.json typescript"
 	},
 	"devDependencies": {
-		"typescript": "^5.9.2"
+		"@types/node": "catalog:",
+		"@typescript/native-preview": "catalog:",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:"
 	}
 }

@@ -15,11 +15,13 @@
 		"check-types": "tsc --noEmit"
 	},
 	"dependencies": {
-		"zod": "^4.4.3"
+		"zod": "catalog:"
 	},
 	"devDependencies": {
 		"@repo/config": "workspace:*",
-		"@types/node": "^25.8.0",
-		"typescript": "5.9.2"
+		"@types/node": "catalog:",
+		"@typescript/native-preview": "catalog:",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:"
 	}
 }
