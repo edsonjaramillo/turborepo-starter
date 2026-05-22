@@ -1,0 +1,4 @@
+ Error: ENOENT: no such file or directory, open '/Users/edson/code/oss/turborepo-starter/packages/ui/node_modules/@repo/ui/src/theme.css'
+  │ [src/theme.css]
+Error occurred when checking code style in the above files.
+[ERROR] exit status 2

@@ -2,6 +2,6 @@ packages:
   - "apps/*"
   - "packages/*"
 allowBuilds:
-  '@infisical/cli': true
+  "@infisical/cli": true
   argon2: true
   esbuild: true

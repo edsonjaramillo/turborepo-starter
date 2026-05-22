@@ -2,8 +2,6 @@
 	"$schema": "./node_modules/oxfmt/configuration_schema.json",
 	"printWidth": 100,
 	"useTabs": true,
-	"ignorePatterns": ["**/*.gen.ts"],
 	"sortImports": true,
-	"sortPackageJson": true,
-	"sortTailwindcss": true
+	"sortPackageJson": true
 }

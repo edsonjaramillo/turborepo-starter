@@ -1,5 +1,6 @@
+import { buttonVariants } from "@repo/ui/button";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
+import { HeadContent, Link, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
 import adminCss from "../admin.css?url";
@@ -29,12 +30,24 @@ export const Route = createRootRoute({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+	const btnStyle = buttonVariants();
 	return (
 		<html lang="en">
 			<head>
 				<HeadContent />
 			</head>
 			<body>
+				<div className="flex gap-8">
+					<Link to="/" className={btnStyle}>
+						Home
+					</Link>
+					<Link to="/signin" className={btnStyle}>
+						Sign In
+					</Link>
+					<Link to="/signup" className={btnStyle}>
+						Sign Up
+					</Link>
+				</div>
 				{children}
 				<TanStackDevtools
 					config={{
