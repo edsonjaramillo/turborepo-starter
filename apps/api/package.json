@@ -6,8 +6,8 @@
 	"license": "MIT",
 	"type": "module",
 	"scripts": {
-		"build": "tsc",
-		"check-types": "tsc --noEmit",
+		"build": "tsgo",
+		"check-types": "tsgo --noEmit",
 		"clean": "rm -rf dist",
 		"db:generate": "infisical run -- drizzle-kit generate",
 		"db:migrate": "infisical run -- drizzle-kit migrate",

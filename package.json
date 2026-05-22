@@ -2,13 +2,33 @@
 	"$schema": "https://json.schemastore.org/package.json",
 	"name": "turborepo-starter",
 	"private": true,
+	"workspaces": {
+		"packages": [
+			"apps/*",
+			"packages/*"
+		],
+		"catalog": {
+			"@types/node": "^25.8.0",
+			"@types/react": "^19.2.2",
+			"@types/react-dom": "^19.2.2",
+			"@typescript/native-preview": "7.0.0-dev.20260521.1",
+			"@infisical/cli": "^0.43.84",
+			"oxfmt": "^0.50.0",
+			"oxlint": "^1.27.0",
+			"react": "^19.2.0",
+			"react-dom": "^19.2.0",
+			"react-hook-form": "^7.76.0",
+			"tailwindcss": "^4.3.0",
+			"zod": "^4.4.3"
+		}
+	},
 	"scripts": {
 		"build": "turbo run build",
 		"dev": "turbo run dev",
 		"docker:down": "infisical run -- docker compose down",
 		"docker:up": "infisical run -- docker compose up -d",
-		"format": "turbo run format && oxfmt .oxfmtrc.json package.json pnpm-workspace.yaml README.md turbo.json",
-		"format:check": "turbo run format:check && oxfmt --check .oxfmtrc.json package.json pnpm-workspace.yaml README.md turbo.json",
+		"format": "turbo run format && oxfmt .oxfmtrc.json bunfig.toml package.json README.md turbo.json",
+		"format:check": "turbo run format:check && oxfmt --check .oxfmtrc.json bunfig.toml package.json README.md turbo.json",
 		"lint": "turbo run lint",
 		"lint:fix": "turbo run lint:fix",
 		"check-types": "turbo run check-types"
@@ -23,5 +43,10 @@
 	"engines": {
 		"node": ">=18"
 	},
-	"packageManager": "pnpm@11.0.0"
+	"packageManager": "bun@1.3.13",
+	"trustedDependencies": [
+		"@infisical/cli",
+		"argon2",
+		"esbuild"
+	]
 }

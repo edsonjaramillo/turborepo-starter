@@ -12,7 +12,7 @@
 		"format:check": "oxfmt --check .",
 		"lint": "oxlint src --max-warnings 0",
 		"lint:fix": "oxlint src --fix --max-warnings 0",
-		"check-types": "tsc --noEmit"
+		"check-types": "tsgo --noEmit"
 	},
 	"dependencies": {
 		"class-variance-authority": "^0.7.1",

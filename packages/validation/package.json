@@ -12,7 +12,7 @@
 		"format:check": "oxfmt --check .",
 		"lint": "oxlint src --config oxlint.json --max-warnings 0",
 		"lint:fix": "oxlint src --config oxlint.json --fix --max-warnings 0",
-		"check-types": "tsc --noEmit"
+		"check-types": "tsgo --noEmit"
 	},
 	"dependencies": {
 		"zod": "catalog:"

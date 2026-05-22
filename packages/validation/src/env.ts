@@ -8,10 +8,12 @@ export function parseEnv<T extends z.ZodTypeAny>(
 ): z.core.output<T> {
 	const result = schema.safeParse(env);
 
-	if (result.error) {
+	if (result.success) {
+		return result.data;
+	}
+
+	{
 		console.error(JSON.stringify(z.treeifyError(result.error), null, 2));
 		process.exit(1);
 	}
-
-	return result.data;
 }
