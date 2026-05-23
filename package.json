@@ -23,6 +23,8 @@
 		}
 	},
 	"scripts": {
+		"clean": "turbo run clean",
+		"check-types": "turbo run check-types",
 		"build": "turbo run build",
 		"dev": "turbo run dev",
 		"docker:down": "infisical run -- docker compose down",
@@ -30,8 +32,7 @@
 		"format": "turbo run format && oxfmt .oxfmtrc.json bunfig.toml package.json README.md turbo.json",
 		"format:check": "turbo run format:check && oxfmt --check .oxfmtrc.json bunfig.toml package.json README.md turbo.json",
 		"lint": "turbo run lint",
-		"lint:fix": "turbo run lint:fix",
-		"check-types": "turbo run check-types"
+		"lint:fix": "turbo run lint:fix"
 	},
 	"devDependencies": {
 		"@infisical/cli": "catalog:",
