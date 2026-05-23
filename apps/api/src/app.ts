@@ -1,16 +1,16 @@
 import { cors } from "@elysia/cors";
 import { openapi } from "@elysia/openapi";
-import { node } from "@elysiajs/node";
 import { JSend } from "@repo/http/jsend";
 import { HttpStatus } from "@repo/http/status-codes";
 import { Elysia } from "elysia";
+import { BunAdapter } from "elysia/adapter/bun";
 import { z } from "zod";
 
 import packageJson from "../package.json";
 import { authRouter } from "./routes/auth-routes";
 import { userRouter } from "./routes/users/users-routes";
 
-export const app = new Elysia({ adapter: node() })
+export const app = new Elysia({ adapter: BunAdapter })
 	.use(
 		openapi({
 			mapJsonSchema: { zod: z.toJSONSchema },

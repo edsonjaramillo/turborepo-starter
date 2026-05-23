@@ -8,7 +8,7 @@
 		"exactOptionalPropertyTypes": true,
 		"noEmit": true,
 		"noUncheckedSideEffectImports": true,
-		"types": ["node"],
+		"types": ["bun"],
 		"verbatimModuleSyntax": true
 	},
 	"include": ["src/**/*.ts"]
