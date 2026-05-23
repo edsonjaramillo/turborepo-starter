@@ -19,7 +19,6 @@ export const authRouter = new Elysia({ prefix: "/auth" }).post(
 		const strToHash = user?.password || "fdajsaflsdf";
 		const hashedPassword = await Password.hash(user?.password || "fdajsaflsdf");
 		const verifyPassword = await Password.verify(hashedPassword, strToHash);
-		console.table({ verifyPassword, user });
 		if (!user || !verifyPassword) {
 			ctx.set.status = HttpStatus.UNAUTHORIZED;
 			return JSend.error("Invalid email or password");
@@ -28,7 +27,6 @@ export const authRouter = new Elysia({ prefix: "/auth" }).post(
 		const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24); // 24 hours
 		const [session] = await SessionQueries.createSession(user.id, expiresAt);
 
-		console.table({ user, session, expiresAt, verifyPassword });
 		if (!session) {
 			ctx.set.status = HttpStatus.INTERNAL_SERVER_ERROR;
 			return JSend.error("Failed to create session");
