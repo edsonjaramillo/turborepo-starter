@@ -1,15 +1,4 @@
 {
-	"extends": "@repo/config/typescript/base.json",
-	"compilerOptions": {
-		"lib": ["ESNext"],
-		"module": "Preserve",
-		"moduleResolution": "Bundler",
-		"allowImportingTsExtensions": true,
-		"exactOptionalPropertyTypes": true,
-		"noEmit": true,
-		"noUncheckedSideEffectImports": true,
-		"types": ["bun"],
-		"verbatimModuleSyntax": true
-	},
+	"extends": "@repo/config/typescript/elysia.json",
 	"include": ["src/**/*.ts"]
 }
