@@ -8,11 +8,11 @@
 		"./*": "./src/*.ts"
 	},
 	"scripts": {
+		"check-types": "tsgo --noEmit",
 		"format": "oxfmt .",
 		"format:check": "oxfmt --check .",
 		"lint": "oxlint src --config oxlint.json --max-warnings 0",
-		"lint:fix": "oxlint src --config oxlint.json --fix --max-warnings 0",
-		"check-types": "tsgo --noEmit"
+		"lint:fix": "oxlint src --config oxlint.json --fix --max-warnings 0"
 	},
 	"dependencies": {
 		"zod": "catalog:"

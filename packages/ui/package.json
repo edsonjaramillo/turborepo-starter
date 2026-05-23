@@ -8,11 +8,11 @@
 		"./*": "./src/*.tsx"
 	},
 	"scripts": {
+		"check-types": "tsgo --noEmit",
 		"format": "oxfmt .",
 		"format:check": "oxfmt --check .",
 		"lint": "oxlint src --max-warnings 0",
-		"lint:fix": "oxlint src --fix --max-warnings 0",
-		"check-types": "tsgo --noEmit"
+		"lint:fix": "oxlint src --fix --max-warnings 0"
 	},
 	"dependencies": {
 		"class-variance-authority": "^0.7.1",
