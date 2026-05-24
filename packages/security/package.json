@@ -1,0 +1,27 @@
+{
+	"$schema": "https://json.schemastore.org/package.json",
+	"name": "@repo/security",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		"./password": "./src/password.ts"
+	},
+	"scripts": {
+		"check-types": "tsgo --noEmit",
+		"format": "oxfmt .",
+		"format:check": "oxfmt --check .",
+		"lint": "oxlint src --config oxlint.json --max-warnings 0",
+		"lint:fix": "oxlint src --config oxlint.json --fix --max-warnings 0"
+	},
+	"dependencies": {
+		"argon2": "^0.44.0"
+	},
+	"devDependencies": {
+		"@repo/config": "workspace:*",
+		"@types/node": "catalog:",
+		"@typescript/native-preview": "catalog:",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:"
+	}
+}
