@@ -1,0 +1,27 @@
+{
+	"$schema": "https://json.schemastore.org/package.json",
+	"name": "@repo/context",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		"./*": "./src/*.ts"
+	},
+	"scripts": {
+		"check-types": "tsgo --noEmit",
+		"format": "oxfmt .",
+		"format:check": "oxfmt --check .",
+		"lint": "oxlint src --config oxlint.json --max-warnings 0",
+		"lint:fix": "oxlint src --config oxlint.json --fix --max-warnings 0"
+	},
+	"dependencies": {
+		"zustand": "^5.0.13"
+	},
+	"devDependencies": {
+		"@repo/config": "workspace:*",
+		"@types/node": "catalog:",
+		"@typescript/native-preview": "catalog:",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:"
+	}
+}
