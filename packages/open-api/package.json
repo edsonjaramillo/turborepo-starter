@@ -1,0 +1,32 @@
+{
+	"$schema": "https://json.schemastore.org/package.json",
+	"name": "@repo/open-api",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		"./*": "./src/*.ts"
+	},
+	"scripts": {
+		"check-types": "tsgo --noEmit",
+		"generate": "infisical run -- bun src/generate-open-api.ts",
+		"format": "oxfmt .",
+		"format:check": "oxfmt --check .",
+		"lint": "oxlint src --config oxlint.json --max-warnings 0",
+		"lint:fix": "oxlint src --config oxlint.json --fix --max-warnings 0"
+	},
+	"dependencies": {
+		"@repo/http": "workspace:*",
+		"@repo/validation": "workspace:*"
+	},
+	"devDependencies": {
+		"@infisical/cli": "catalog:",
+		"@repo/config": "workspace:*",
+		"@types/node": "catalog:",
+		"@typescript/native-preview": "catalog:",
+		"openapi-fetch": "^0.17.0",
+		"openapi-typescript": "^7.13.0",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:"
+	}
+}

@@ -4,7 +4,7 @@ const isProduction = apiEnv.NODE_ENV === "production";
 
 export function createCookie(httpOnly: boolean, expires: Date) {
 	return {
-		domain: isProduction ? ".example.com" : "localhost",
+		...(isProduction ? { domain: ".example.com" } : {}),
 		httpOnly,
 		expires,
 		path: "/",

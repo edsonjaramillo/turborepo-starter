@@ -20,6 +20,7 @@
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.2.2",
+		"@repo/open-api": "workspace:*",
 		"@repo/ui": "workspace:*",
 		"@repo/validation": "workspace:*",
 		"@tailwindcss/vite": "^4.1.18",
@@ -29,11 +30,13 @@
 		"@tanstack/react-router-ssr-query": "latest",
 		"@tanstack/react-start": "latest",
 		"@tanstack/router-plugin": "^1.132.0",
+		"@tanstack/zod-adapter": "^1.167.0",
 		"nitro": "latest",
 		"react": "catalog:",
 		"react-dom": "catalog:",
 		"react-hook-form": "catalog:",
-		"tailwindcss": "catalog:"
+		"tailwindcss": "catalog:",
+		"zod": "catalog:"
 	},
 	"devDependencies": {
 		"@repo/config": "workspace:*",

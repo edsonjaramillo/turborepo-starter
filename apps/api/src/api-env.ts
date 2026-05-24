@@ -12,8 +12,7 @@ const ApiEnvSchema = z.object({
 	DATABASE_HOST: zString,
 	DATABASE_PORT: zCoerceNumber,
 	DATABASE_NAME: zString,
+	DUMMY_PASSWORD_HASH: zString,
 });
-
-export type ApiEnv = z.infer<typeof ApiEnvSchema>;
 
 export const apiEnv = parseEnv(ApiEnvSchema, process.env);

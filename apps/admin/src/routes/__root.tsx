@@ -41,11 +41,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 					<Link to="/" className={btnStyle}>
 						Home
 					</Link>
-					<Link to="/signin" className={btnStyle}>
+					<Link to="/sign-in" className={btnStyle}>
 						Sign In
 					</Link>
-					<Link to="/signup" className={btnStyle}>
+					<Link to="/sign-up" className={btnStyle}>
 						Sign Up
+					</Link>
+					<Link to="/users" className={btnStyle}>
+						Users
 					</Link>
 				</div>
 				{children}

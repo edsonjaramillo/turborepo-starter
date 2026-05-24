@@ -3,6 +3,7 @@ import { HttpStatus } from "@repo/http/status-codes";
 import { signInFormSchema } from "@repo/validation/forms";
 import { Elysia } from "elysia";
 
+import { apiEnv } from "../api-env";
 import { SessionQueries } from "../db/queries/session-queries";
 import { UserQueries } from "../db/queries/user-queries";
 import { sessionSignInSchema } from "../db/schema/sessions-schema";
@@ -16,9 +17,9 @@ export const authRouter = new Elysia({ prefix: "/auth" }).post(
 	async (ctx) => {
 		const user = await UserQueries.getUserCredentialsByEmail(ctx.body.email);
 
-		const strToHash = user?.password || "fdajsaflsdf";
-		const hashedPassword = await Password.hash(user?.password || "fdajsaflsdf");
-		const verifyPassword = await Password.verify(hashedPassword, strToHash);
+		const passwordHash = user?.password ?? apiEnv.DUMMY_PASSWORD_HASH;
+		const verifyPassword = await Password.verify(passwordHash, ctx.body.password);
+
 		if (!user || !verifyPassword) {
 			ctx.set.status = HttpStatus.UNAUTHORIZED;
 			return JSend.error("Invalid email or password");
@@ -53,7 +54,7 @@ export const authRouter = new Elysia({ prefix: "/auth" }).post(
 		},
 		detail: {
 			tags,
-			description: "Get a list of users",
+			description: "Sign in a user and create a session",
 		},
 	},
 );

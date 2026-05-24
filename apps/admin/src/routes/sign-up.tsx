@@ -6,7 +6,7 @@ import { signUpFormSchema, type SignUpFormData } from "@repo/validation/forms";
 import { createFileRoute } from "@tanstack/react-router";
 import { FormProvider, useForm } from "react-hook-form";
 
-export const Route = createFileRoute("/signup")({
+export const Route = createFileRoute("/sign-up")({
 	component: RouteComponent,
 });
 

@@ -6,13 +6,19 @@ import { signInFormSchema, type SignInFormData } from "@repo/validation/forms";
 import { createFileRoute } from "@tanstack/react-router";
 import { FormProvider, useForm } from "react-hook-form";
 
-export const Route = createFileRoute("/signin")({
+import { apiClient } from "#/lib/admin-api-client.ts";
+
+export const Route = createFileRoute("/sign-in")({
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const form = useForm<SignInFormData>({ resolver: standardSchemaResolver(signInFormSchema) });
-	const onSubmit = form.handleSubmit(() => {});
+	const form = useForm<SignInFormData>({
+		resolver: standardSchemaResolver(signInFormSchema),
+	});
+	const onSubmit = form.handleSubmit(async (data) => {
+		await apiClient.auth.signIn(data);
+	});
 	return (
 		<div>
 			<FormProvider {...form}>
