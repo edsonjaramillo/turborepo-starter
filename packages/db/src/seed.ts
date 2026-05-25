@@ -1,23 +1,51 @@
-import process from "node:process";
-
 import { hashPassword } from "@repo/security/password";
 
 import { createDb } from "./client";
 import { dbEnv } from "./env";
 import { usersTable } from "./schema/users";
 
-const names = [
-	"Steve Rogers",
-	"Bruce Banner",
-	"Natasha Romanoff",
-	"Clint Barton",
-	"Thor Odinson",
-	"Wanda Maximoff",
-	"Peter Parker",
-	"Stephen Strange",
-	"Eddie Brock",
-	"Peter Quill",
-];
+const users = [
+	{
+		firstName: "Steve",
+		lastName: "Rogers",
+	},
+	{
+		firstName: "Bruce",
+		lastName: "Banner",
+	},
+	{
+		firstName: "Natasha",
+		lastName: "Romanoff",
+	},
+	{
+		firstName: "Clint",
+		lastName: "Barton",
+	},
+	{
+		firstName: "Thor",
+		lastName: "Odinson",
+	},
+	{
+		firstName: "Wanda",
+		lastName: "Maximoff",
+	},
+	{
+		firstName: "Peter",
+		lastName: "Parker",
+	},
+	{
+		firstName: "Stephen",
+		lastName: "Strange",
+	},
+	{
+		firstName: "Eddie",
+		lastName: "Brock",
+	},
+	{
+		firstName: "Peter",
+		lastName: "Quill",
+	},
+] as const;
 
 const database = createDb({
 	host: dbEnv.DATABASE_HOST,
@@ -29,20 +57,17 @@ const database = createDb({
 
 async function seed() {
 	await database.db.delete(usersTable);
+	const password = await hashPassword("abcd1234");
 
-	for (const name of names) {
-		const [firstName, lastName] = name.toLowerCase().split(" ");
-		const email = `${firstName}.${lastName}@example.com`;
-		const password = await hashPassword("abcd1234");
-
+	for (const { firstName, lastName } of users) {
+		const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`;
 		await database.users.create({
-			name,
+			firstName,
+			lastName,
 			email,
 			password,
 		});
 	}
 }
 
-seed()
-	.catch(console.error)
-	.finally(() => process.exit());
+await seed();

@@ -3,5 +3,6 @@ import { z } from "zod";
 
 export const signInSessionResponseSchema = z.object({
 	id: zString,
-	name: zString,
+	firstName: zString,
+	lastName: zString,
 });

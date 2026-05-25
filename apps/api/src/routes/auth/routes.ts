@@ -39,7 +39,8 @@ export const authRouter = new Elysia({ prefix: "/auth" }).post(
 		return JSend.success(
 			{
 				id: session.id,
-				name: user.name,
+				firstName: user.firstName,
+				lastName: user.lastName,
 			},
 			"Session created successfully",
 		);

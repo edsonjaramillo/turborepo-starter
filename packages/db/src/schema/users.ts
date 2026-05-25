@@ -6,13 +6,15 @@ export const usersTable = pgTable("users", {
 	id,
 	createdAt,
 	updatedAt,
-	name: text().notNull(),
+	firstName: text("first_name").notNull(),
+	lastName: text("last_name").notNull(),
 	email: text().notNull().unique(),
 	password: text().notNull(),
 });
 
 export const userColumns = {
 	id: true,
-	name: true,
+	firstName: true,
+	lastName: true,
 	email: true,
 } as const;

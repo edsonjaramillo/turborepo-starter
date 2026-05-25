@@ -26,7 +26,7 @@ export function createUsersRepository(db: Database) {
 		async getCredentialsByEmail(email: string) {
 			return await db.query.usersTable.findFirst({
 				where: { email: normalizeEmail(email) },
-				columns: { id: true, name: true, email: true, password: true },
+				columns: { id: true, firstName: true, lastName: true, email: true, password: true },
 			});
 		},
 

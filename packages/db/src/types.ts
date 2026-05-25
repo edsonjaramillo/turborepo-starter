@@ -4,7 +4,8 @@ export interface PaginationInput {
 }
 
 export interface CreateUserInput {
-	name: string;
+	firstName: string;
+	lastName: string;
 	email: string;
 	password: string;
 }
