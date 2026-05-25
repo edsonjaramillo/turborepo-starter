@@ -5,9 +5,9 @@ import { verifyPassword } from "@repo/security/password";
 import { signInFormSchema } from "@repo/validation/forms";
 import { Elysia } from "elysia";
 
-import { database } from "../../api-db";
-import { apiEnv } from "../../api-env";
-import { createCookie } from "../../utils/cookies";
+import { database } from "../api-db";
+import { apiEnv } from "../api-env";
+import { createCookie } from "../utils/cookies";
 
 const tags = ["Auth"];
 

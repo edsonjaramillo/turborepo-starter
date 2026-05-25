@@ -6,8 +6,8 @@ import { paginationSchema } from "@repo/validation/pagination";
 import { Elysia } from "elysia";
 import { z } from "zod";
 
-import { database } from "../../api-db";
-import { parsePagination } from "../../middleware/paginate";
+import { database } from "../api-db";
+import { parsePagination } from "../middleware/paginate";
 
 const tags = ["Users"];
 
