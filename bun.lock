@@ -55,6 +55,7 @@
         "@elysia/cors": "^1.4.2",
         "@elysia/openapi": "^1.4.15",
         "@infisical/cli": "catalog:",
+        "@repo/contracts": "workspace:*",
         "@repo/db": "workspace:*",
         "@repo/http": "workspace:*",
         "@repo/security": "workspace:*",
@@ -87,6 +88,21 @@
       "version": "0.0.0",
       "dependencies": {
         "zustand": "^5.0.13",
+      },
+      "devDependencies": {
+        "@repo/config": "workspace:*",
+        "@types/node": "catalog:",
+        "@typescript/native-preview": "catalog:",
+        "oxfmt": "catalog:",
+        "oxlint": "catalog:",
+      },
+    },
+    "packages/contracts": {
+      "name": "@repo/contracts",
+      "version": "0.0.0",
+      "dependencies": {
+        "@repo/validation": "workspace:*",
+        "zod": "catalog:",
       },
       "devDependencies": {
         "@repo/config": "workspace:*",
@@ -483,6 +499,8 @@
     "@repo/config": ["@repo/config@workspace:packages/config"],
 
     "@repo/context": ["@repo/context@workspace:packages/context"],
+
+    "@repo/contracts": ["@repo/contracts@workspace:packages/contracts"],
 
     "@repo/db": ["@repo/db@workspace:packages/db"],
 

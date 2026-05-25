@@ -1,3 +1,4 @@
+import { signInSessionResponseSchema } from "@repo/contracts/auth";
 import { JSend, JSendErrorSchema, JSendSuccessSchema } from "@repo/http/jsend";
 import { HttpStatus } from "@repo/http/status-codes";
 import { verifyPassword } from "@repo/security/password";
@@ -7,7 +8,6 @@ import { Elysia } from "elysia";
 import { database } from "../../api-db";
 import { apiEnv } from "../../api-env";
 import { createCookie } from "../../utils/cookies";
-import { signInSessionResponseSchema } from "./contracts";
 
 const tags = ["Auth"];
 

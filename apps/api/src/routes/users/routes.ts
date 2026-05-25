@@ -1,3 +1,4 @@
+import { createUserBodySchema, userResponseSchema } from "@repo/contracts/users";
 import { JSend, JSendErrorSchema, JSendSuccessSchema } from "@repo/http/jsend";
 import { HttpStatus } from "@repo/http/status-codes";
 import { hashPassword } from "@repo/security/password";
@@ -7,7 +8,6 @@ import { z } from "zod";
 
 import { database } from "../../api-db";
 import { parsePagination } from "../../middleware/paginate";
-import { createUserBodySchema, userResponseSchema } from "./contracts";
 
 const tags = ["Users"];
 

@@ -21,6 +21,7 @@
 		"@elysia/cors": "^1.4.2",
 		"@elysia/openapi": "^1.4.15",
 		"@infisical/cli": "catalog:",
+		"@repo/contracts": "workspace:*",
 		"@repo/db": "workspace:*",
 		"@repo/http": "workspace:*",
 		"@repo/security": "workspace:*",
