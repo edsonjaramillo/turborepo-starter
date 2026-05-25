@@ -1,4 +1,4 @@
-import { createUserBodySchema, userResponseSchema } from "@repo/contracts/users";
+import { createUserBodySchema, userResponseSchema } from "@repo/contracts/users-contracts";
 import { JSend, JSendErrorSchema, JSendSuccessSchema } from "@repo/http/jsend";
 import { HttpStatus } from "@repo/http/status-codes";
 import { hashPassword } from "@repo/security/password";

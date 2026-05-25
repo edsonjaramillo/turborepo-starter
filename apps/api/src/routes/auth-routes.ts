@@ -1,4 +1,4 @@
-import { signInSessionResponseSchema } from "@repo/contracts/auth";
+import { signInSessionResponseSchema } from "@repo/contracts/auth-contracts";
 import { JSend, JSendErrorSchema, JSendSuccessSchema } from "@repo/http/jsend";
 import { HttpStatus } from "@repo/http/status-codes";
 import { verifyPassword } from "@repo/security/password";

@@ -5,8 +5,8 @@
 	"private": true,
 	"type": "module",
 	"exports": {
-		"./auth": "./src/auth.ts",
-		"./users": "./src/users.ts"
+		"./auth-contracts": "./src/auth-contracts.ts",
+		"./users-contracts": "./src/users-contracts.ts"
 	},
 	"scripts": {
 		"check-types": "tsgo --noEmit",
