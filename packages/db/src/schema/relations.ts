@@ -1,7 +1,7 @@
 import { defineRelations } from "drizzle-orm";
 
-import { sessionsTable } from "./sessions-schema";
-import { usersTable } from "./users-schema";
+import { sessionsTable } from "./sessions";
+import { usersTable } from "./users";
 
 export const relations = defineRelations({ usersTable, sessionsTable }, (r) => ({
 	sessionsTable: {

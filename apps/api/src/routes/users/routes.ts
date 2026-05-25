@@ -1,27 +1,27 @@
 import { JSend, JSendErrorSchema, JSendSuccessSchema } from "@repo/http/jsend";
 import { HttpStatus } from "@repo/http/status-codes";
+import { hashPassword } from "@repo/security/password";
 import { paginationSchema } from "@repo/validation/pagination";
 import { Elysia } from "elysia";
 import { z } from "zod";
 
-import { UserQueries } from "../../db/queries/user-queries";
-import { insertUserSchema, selectUserSchema } from "../../db/schema/users-schema";
+import { database } from "../../api-db";
 import { parsePagination } from "../../middleware/paginate";
-import { Password } from "../../utils/password";
+import { createUserBodySchema, userResponseSchema } from "./contracts";
 
 const tags = ["Users"];
 
 const paginatedUsersRouter = new Elysia().resolve(parsePagination).get(
 	"/",
 	async (ctx) => {
-		const users = await UserQueries.getUsers(ctx.pagination);
+		const users = await database.users.list(ctx.pagination);
 		ctx.set.status = HttpStatus.OK;
 		return JSend.success(users, "Got users");
 	},
 	{
 		query: paginationSchema,
 		response: {
-			[HttpStatus.OK]: JSendSuccessSchema(z.array(selectUserSchema)),
+			[HttpStatus.OK]: JSendSuccessSchema(z.array(userResponseSchema)),
 			[HttpStatus.BAD_REQUEST]: JSendErrorSchema(),
 		},
 		detail: {
@@ -34,27 +34,20 @@ const paginatedUsersRouter = new Elysia().resolve(parsePagination).get(
 export const userRouter = new Elysia({ prefix: "/users" }).use(paginatedUsersRouter).post(
 	"/",
 	async (ctx) => {
-		const parsedBody = insertUserSchema.safeParse(ctx.body);
-		if (!parsedBody.success) {
-			ctx.set.status = HttpStatus.BAD_REQUEST;
-			return JSend.error("Invalid user payload.");
-		}
-
-		const user = parsedBody.data;
-		const existingUser = await UserQueries.getUserByEmail(user.email);
+		const existingUser = await database.users.getByEmail(ctx.body.email);
 		if (existingUser) {
 			ctx.set.status = HttpStatus.CONFLICT;
 			return JSend.error("User already exists.");
 		}
 
-		const hashedPassword = await Password.hash(user.password);
-		await UserQueries.createUser({ ...user, password: hashedPassword });
+		const password = await hashPassword(ctx.body.password);
+		await database.users.create({ ...ctx.body, password });
 
 		ctx.set.status = HttpStatus.CREATED;
 		return JSend.success({}, "User created succesfully.");
 	},
 	{
-		body: insertUserSchema,
+		body: createUserBodySchema,
 		response: {
 			[HttpStatus.CREATED]: JSendSuccessSchema(z.object({})),
 			[HttpStatus.BAD_REQUEST]: JSendErrorSchema(),

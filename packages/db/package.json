@@ -1,0 +1,45 @@
+{
+	"$schema": "https://json.schemastore.org/package.json",
+	"name": "@repo/db",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		"./client": "./src/client.ts",
+		"./repositories/*": "./src/repositories/*.ts",
+		"./schema/*": "./src/schema/*.ts",
+		"./seed": "./src/seed.ts",
+		"./types": "./src/types.ts",
+		"./drizzle-config": "./drizzle.config.ts"
+	},
+	"scripts": {
+		"check-types": "tsgo --noEmit",
+		"generate": "infisical run -- drizzle-kit generate",
+		"migrate": "infisical run -- drizzle-kit migrate",
+		"push": "infisical run -- drizzle-kit push",
+		"seed": "infisical run -- bun src/seed.ts",
+		"studio": "infisical run -- drizzle-kit studio",
+		"format": "oxfmt .",
+		"format:check": "oxfmt --check .",
+		"lint": "oxlint src drizzle.config.ts --config oxlint.json --max-warnings 0",
+		"lint:fix": "oxlint src drizzle.config.ts --config oxlint.json --fix --max-warnings 0"
+	},
+	"dependencies": {
+		"@repo/security": "workspace:*",
+		"@repo/validation": "workspace:*",
+		"drizzle-orm": "1.0.0-beta.22",
+		"pg": "^8.20.0",
+		"uuidv7": "^1.2.1",
+		"zod": "catalog:"
+	},
+	"devDependencies": {
+		"@infisical/cli": "catalog:",
+		"@repo/config": "workspace:*",
+		"@types/node": "catalog:",
+		"@types/pg": "^8.20.0",
+		"@typescript/native-preview": "catalog:",
+		"drizzle-kit": "1.0.0-beta.22",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:"
+	}
+}
