@@ -1,11 +1,17 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "02880b12-a074-42f4-b3b4-152f6952e329",
+  "id": "2a986f6a-f0ee-4d0c-8371-9692abe0458c",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
   "ddl": [
+    {
+      "isRlsEnabled": false,
+      "name": "permissions",
+      "entityType": "tables",
+      "schema": "public"
+    },
     {
       "isRlsEnabled": false,
       "name": "sessions",
@@ -29,7 +35,7 @@
       "name": "id",
       "entityType": "columns",
       "schema": "public",
-      "table": "sessions"
+      "table": "permissions"
     },
     {
       "type": "timestamp with time zone",
@@ -39,7 +45,46 @@
       "default": "now()",
       "generated": null,
       "identity": null,
-      "name": "created_at",
+      "name": "createdAt",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "permissions"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "updatedAt",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "permissions"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "name",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "permissions"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "id",
       "entityType": "columns",
       "schema": "public",
       "table": "sessions"
@@ -52,7 +97,20 @@
       "default": "now()",
       "generated": null,
       "identity": null,
-      "name": "updated_at",
+      "name": "createdAt",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "sessions"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "updatedAt",
       "entityType": "columns",
       "schema": "public",
       "table": "sessions"
@@ -65,7 +123,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "user_id",
+      "name": "userId",
       "entityType": "columns",
       "schema": "public",
       "table": "sessions"
@@ -78,7 +136,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "expires_at",
+      "name": "expiresAt",
       "entityType": "columns",
       "schema": "public",
       "table": "sessions"
@@ -104,7 +162,7 @@
       "default": "now()",
       "generated": null,
       "identity": null,
-      "name": "created_at",
+      "name": "createdAt",
       "entityType": "columns",
       "schema": "public",
       "table": "users"
@@ -117,7 +175,7 @@
       "default": "now()",
       "generated": null,
       "identity": null,
-      "name": "updated_at",
+      "name": "updatedAt",
       "entityType": "columns",
       "schema": "public",
       "table": "users"
@@ -178,7 +236,7 @@
       "nameExplicit": true,
       "columns": [
         {
-          "value": "user_id",
+          "value": "userId",
           "isExpression": false,
           "asc": true,
           "nullsFirst": false,
@@ -198,7 +256,7 @@
     {
       "nameExplicit": false,
       "columns": [
-        "user_id"
+        "userId"
       ],
       "schemaTo": "public",
       "tableTo": "users",
@@ -207,10 +265,20 @@
       ],
       "onUpdate": "CASCADE",
       "onDelete": "CASCADE",
-      "name": "sessions_user_id_users_id_fkey",
+      "name": "sessions_userId_users_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "sessions"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "permissions_pkey",
+      "schema": "public",
+      "table": "permissions",
+      "entityType": "pks"
     },
     {
       "columns": [
@@ -231,6 +299,17 @@
       "schema": "public",
       "table": "users",
       "entityType": "pks"
+    },
+    {
+      "nameExplicit": false,
+      "columns": [
+        "name"
+      ],
+      "nullsNotDistinct": false,
+      "name": "permissions_name_key",
+      "schema": "public",
+      "table": "permissions",
+      "entityType": "uniques"
     },
     {
       "nameExplicit": false,

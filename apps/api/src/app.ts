@@ -7,8 +7,8 @@ import { BunAdapter } from "elysia/adapter/bun";
 import { z } from "zod";
 
 import packageJson from "../package.json";
-import { authRouter } from "./routes/auth/routes";
-import { userRouter } from "./routes/users/routes";
+import { authRouter } from "./routes/auth-routes";
+import { userRouter } from "./routes/users-routes";
 
 export const app = new Elysia({ adapter: BunAdapter })
 	.use(

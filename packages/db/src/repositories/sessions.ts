@@ -12,7 +12,11 @@ export function createSessionsRepository(db: Database) {
 		},
 
 		async create(userId: string, expiresAt: Date) {
-			return await db.insert(sessionsTable).values({ userId, expiresAt }).returning();
+			const [session] = await db.insert(sessionsTable).values({ userId, expiresAt }).returning();
+			if (!session) {
+				return undefined;
+			}
+			return session;
 		},
 	};
 }

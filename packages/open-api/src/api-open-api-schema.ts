@@ -217,7 +217,9 @@ export interface operations {
 						status: "success";
 						payload: {
 							id: string;
-							name: string;
+							firstName: string;
+							lastName: string;
+							permissions: string[];
 						};
 						message: string;
 					};

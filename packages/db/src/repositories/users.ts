@@ -2,10 +2,6 @@ import type { Database } from "../client";
 import { userColumns, usersTable } from "../schema/users";
 import type { CreateUserInput, PaginationInput } from "../types";
 
-function normalizeEmail(email: string) {
-	return email.trim().toLowerCase();
-}
-
 export function createUsersRepository(db: Database) {
 	return {
 		async list(pagination: PaginationInput) {
@@ -17,21 +13,25 @@ export function createUsersRepository(db: Database) {
 		},
 
 		async getByEmail(email: string) {
-			return await db.query.usersTable.findFirst({
-				where: { email: normalizeEmail(email) },
-				columns: userColumns,
-			});
+			return await db.query.usersTable.findFirst({ where: { email }, columns: userColumns });
 		},
 
-		async getCredentialsByEmail(email: string) {
-			return await db.query.usersTable.findFirst({
-				where: { email: normalizeEmail(email) },
+		async getSignInProfileByEmail(email: string) {
+			const user = await db.query.usersTable.findFirst({
+				where: { email },
 				columns: { id: true, firstName: true, lastName: true, email: true, password: true },
+				with: { permissions: { columns: { id: true, name: true } } },
 			});
+
+			if (!user) {
+				return undefined;
+			}
+
+			return user;
 		},
 
 		async create(user: CreateUserInput) {
-			await db.insert(usersTable).values({ ...user, email: normalizeEmail(user.email) });
+			await db.insert(usersTable).values({ ...user, email: user.email });
 		},
 	};
 }

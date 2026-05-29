@@ -2,6 +2,7 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import type { PoolConfig } from "pg";
 import { Pool } from "pg";
 
+import { createPermissionsRepository } from "./repositories/permissions";
 import { createSessionsRepository } from "./repositories/sessions";
 import { createUsersRepository } from "./repositories/users";
 import { relations } from "./schema/relations";
@@ -16,7 +17,7 @@ export interface DatabaseConfig {
 }
 
 function createDatabaseClient(config: DatabaseConfig) {
-	const pool = new Pool({
+	const client = new Pool({
 		host: config.host,
 		password: config.password,
 		port: config.port,
@@ -25,11 +26,7 @@ function createDatabaseClient(config: DatabaseConfig) {
 		ssl: config.ssl,
 	});
 
-	return drizzle({
-		client: pool,
-		relations,
-		casing: "snake_case",
-	});
+	return drizzle({ client, relations });
 }
 
 export type Database = ReturnType<typeof createDatabaseClient>;
@@ -39,8 +36,9 @@ export function createDb(config: DatabaseConfig) {
 
 	return {
 		db,
-		users: createUsersRepository(db),
+		permissions: createPermissionsRepository(db),
 		sessions: createSessionsRepository(db),
+		users: createUsersRepository(db),
 	};
 }
 

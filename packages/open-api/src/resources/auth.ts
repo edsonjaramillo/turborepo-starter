@@ -1,4 +1,4 @@
-import type { SignInFormData } from "@repo/validation/forms";
+import type { SignInFormData } from "@repo/contracts/auth-contracts";
 
 import type { APIClient } from "../api-client";
 
