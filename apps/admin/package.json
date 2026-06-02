@@ -7,7 +7,7 @@
 		"#/*": "./src/*"
 	},
 	"scripts": {
-		"clean": "rm -rf .output",
+		"clean": "rm -rf .output .nitro .tanstack",
 		"check-types": "tsgo --noEmit",
 		"build": "bun --bun vite build",
 		"dev": "infisical run -- bun --bun vite dev --port 3000",

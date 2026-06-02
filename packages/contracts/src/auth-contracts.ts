@@ -14,9 +14,9 @@ export const signInResponseSchema = z.object({
 });
 
 export const signUpBodySchema = z.object({
-	firstName: zString.meta({ example: "Tony" }),
-	lastName: zString.meta({ example: "Stark" }),
-	email: zEmail.meta({ example: "tony.stark@example.com" }),
+	firstName: zString.meta({ example: "Nick" }),
+	lastName: zString.meta({ example: "Fury" }),
+	email: zEmail.meta({ example: "nick.fury@example.com" }),
 	password: zPassword.meta({ example: "abcd1234" }),
 });
 

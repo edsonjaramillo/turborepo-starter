@@ -2,9 +2,26 @@ import { hashPassword } from "@repo/security/password";
 
 import { createDb } from "./client";
 import { dbEnv } from "./env";
+import { permissionsTable } from "./schema/permissions";
 import { usersTable } from "./schema/users";
+import { usersPermissionsTable } from "./schema/users-permissions";
+
+const permissions = ["sessions:delete"] as const;
+
+type PermissionName = (typeof permissions)[number];
+
+interface SeedUser {
+	firstName: string;
+	lastName: string;
+	permissions?: readonly PermissionName[];
+}
 
 const users = [
+	{
+		firstName: "Tony",
+		lastName: "Stark",
+		permissions: ["sessions:delete"],
+	},
 	{
 		firstName: "Steve",
 		lastName: "Rogers",
@@ -45,7 +62,7 @@ const users = [
 		firstName: "Peter",
 		lastName: "Quill",
 	},
-] as const;
+] as const satisfies readonly SeedUser[];
 
 const database = createDb({
 	host: dbEnv.DATABASE_HOST,
@@ -56,17 +73,50 @@ const database = createDb({
 });
 
 async function seed() {
+	await database.db.delete(usersPermissionsTable);
 	await database.db.delete(usersTable);
+	await database.db.delete(permissionsTable);
+
+	const createdPermissions = await database.db
+		.insert(permissionsTable)
+		.values(permissions.map((name) => ({ name })))
+		.returning({ id: permissionsTable.id, name: permissionsTable.name });
+
+	const permissionIds = new Map(
+		createdPermissions.map((permission) => [permission.name, permission.id]),
+	);
+	const getPermissionId = (permission: PermissionName) => {
+		const permissionId = permissionIds.get(permission);
+
+		if (!permissionId) {
+			throw new Error(`Failed to seed permission ${permission}`);
+		}
+
+		return permissionId;
+	};
 	const password = await hashPassword("abcd1234");
 
-	for (const { firstName, lastName } of users) {
+	for (const userSeed of users) {
+		const { firstName, lastName } = userSeed;
+		const assignedPermissions = "permissions" in userSeed ? userSeed.permissions : undefined;
 		const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`;
-		await database.users.create({
-			firstName,
-			lastName,
-			email,
-			password,
-		});
+		const [user] = await database.db
+			.insert(usersTable)
+			.values({ firstName, lastName, email, password })
+			.returning({ id: usersTable.id });
+
+		if (!user) {
+			throw new Error(`Failed to seed user ${email}`);
+		}
+
+		if (assignedPermissions?.length) {
+			await database.db.insert(usersPermissionsTable).values(
+				assignedPermissions.map((permission) => ({
+					userId: user.id,
+					permissionId: getPermissionId(permission),
+				})),
+			);
+		}
 	}
 }
 
