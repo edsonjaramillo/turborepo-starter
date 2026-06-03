@@ -9,17 +9,10 @@ export const usersTable = pgTable(
 		id,
 		createdAt,
 		updatedAt,
-		firstName: text("first_name").notNull(),
-		lastName: text("last_name").notNull(),
+		firstName: text().notNull(),
+		lastName: text().notNull(),
 		email: text().notNull(),
-		password: text().notNull(),
+		passwordHash: text().notNull(),
 	},
 	(table) => [uniqueIndex("emailUniqueIndex").on(lower(table.email))],
 );
-
-export const userColumns = {
-	id: true,
-	firstName: true,
-	lastName: true,
-	email: true,
-} as const;

@@ -1,8 +1,8 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { signUpBodySchema, type SignUpBody } from "@repo/contracts/auth-contracts";
 import { Button } from "@repo/ui/button";
 import { Form } from "@repo/ui/form";
 import { Input, InputError, InputGroup, Label } from "@repo/ui/inputs";
-import { signUpFormSchema, type SignUpFormData } from "@repo/validation/forms";
 import { createFileRoute } from "@tanstack/react-router";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -11,7 +11,7 @@ export const Route = createFileRoute("/sign-up")({
 });
 
 function RouteComponent() {
-	const form = useForm<SignUpFormData>({ resolver: standardSchemaResolver(signUpFormSchema) });
+	const form = useForm<SignUpBody>({ resolver: standardSchemaResolver(signUpBodySchema) });
 	const onSubmit = form.handleSubmit(() => {});
 	return (
 		<div>

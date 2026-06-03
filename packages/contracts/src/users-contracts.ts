@@ -1,4 +1,4 @@
-import { zEmail, zString } from "@repo/validation/core";
+import { zString } from "@repo/validation/core";
 import { z } from "zod";
 
 export const userResponseSchema = z.array(
@@ -6,6 +6,5 @@ export const userResponseSchema = z.array(
 		id: zString,
 		firstName: zString,
 		lastName: zString,
-		email: zEmail,
 	}),
 );

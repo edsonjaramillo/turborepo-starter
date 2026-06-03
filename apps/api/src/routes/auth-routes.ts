@@ -1,5 +1,5 @@
 import {
-	signInFormSchema,
+	signInBodySchema,
 	signInResponseSchema,
 	signUpBodySchema,
 } from "@repo/contracts/auth-contracts";
@@ -21,7 +21,7 @@ export const authRouter = new Elysia({ prefix: "/auth" })
 		async (ctx) => {
 			const user = await database.users.getSignInProfileByEmail(ctx.body.email);
 
-			const passwordHash = user?.password ?? apiEnv.DUMMY_PASSWORD_HASH;
+			const passwordHash = user?.passwordHash ?? apiEnv.DUMMY_PASSWORD_HASH;
 			const passwordMatches = await verifyPassword(passwordHash, ctx.body.password);
 
 			if (!user || !passwordMatches) {
@@ -45,13 +45,12 @@ export const authRouter = new Elysia({ prefix: "/auth" })
 					firstName: user.firstName,
 					lastName: user.lastName,
 					email: user.email,
-					permissions: user.permissions,
 				},
 				"Session created successfully",
 			);
 		},
 		{
-			body: signInFormSchema,
+			body: signInBodySchema,
 			response: {
 				[HttpStatus.OK]: JSendSuccessSchema(signInResponseSchema),
 				[HttpStatus.INTERNAL_SERVER_ERROR]: JSendErrorSchema(),
@@ -72,8 +71,8 @@ export const authRouter = new Elysia({ prefix: "/auth" })
 				return JSend.error("User already exists.");
 			}
 
-			const password = await hashPassword(ctx.body.password);
-			await database.users.create({ ...ctx.body, password });
+			const passwordHash = await hashPassword(ctx.body.password);
+			await database.users.create({ ...ctx.body, passwordHash });
 
 			ctx.set.status = HttpStatus.CREATED;
 			return JSend.success({}, "User created succesfully.");

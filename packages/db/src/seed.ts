@@ -73,7 +73,6 @@ const database = createDb({
 });
 
 async function seed() {
-	await database.db.delete(usersPermissionsTable);
 	await database.db.delete(usersTable);
 	await database.db.delete(permissionsTable);
 
@@ -94,7 +93,7 @@ async function seed() {
 
 		return permissionId;
 	};
-	const password = await hashPassword("abcd1234");
+	const passwordHash = await hashPassword("abcd1234");
 
 	for (const userSeed of users) {
 		const { firstName, lastName } = userSeed;
@@ -102,7 +101,7 @@ async function seed() {
 		const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`;
 		const [user] = await database.db
 			.insert(usersTable)
-			.values({ firstName, lastName, email, password })
+			.values({ firstName, lastName, email, passwordHash })
 			.returning({ id: usersTable.id });
 
 		if (!user) {

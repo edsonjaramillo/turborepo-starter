@@ -1,8 +1,8 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { signInBodySchema, type SignInBody } from "@repo/contracts/auth-contracts";
 import { Button } from "@repo/ui/button";
 import { Form } from "@repo/ui/form";
 import { Input, InputError, InputGroup, Label } from "@repo/ui/inputs";
-import { signInFormSchema, type SignInFormData } from "@repo/validation/forms";
 import { createFileRoute } from "@tanstack/react-router";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -13,9 +13,10 @@ export const Route = createFileRoute("/sign-in")({
 });
 
 function RouteComponent() {
-	const form = useForm<SignInFormData>({
-		resolver: standardSchemaResolver(signInFormSchema),
+	const form = useForm<SignInBody>({
+		resolver: standardSchemaResolver(signInBodySchema),
 	});
+
 	const onSubmit = form.handleSubmit(async (data) => {
 		await apiClient.auth.signIn(data);
 	});

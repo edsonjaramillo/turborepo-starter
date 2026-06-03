@@ -5,12 +5,6 @@ export const signInResponseSchema = z.object({
 	firstName: zString,
 	lastName: zString,
 	email: zEmail,
-	permissions: z.array(
-		z.object({
-			id: zString,
-			name: zString,
-		}),
-	),
 });
 
 export const signUpBodySchema = z.object({
@@ -20,11 +14,11 @@ export const signUpBodySchema = z.object({
 	password: zPassword.meta({ example: "abcd1234" }),
 });
 
-export type SignUpFormData = z.infer<typeof signUpBodySchema>;
+export type SignInBody = z.infer<typeof signInBodySchema>;
 
-export const signInFormSchema = z.object({
+export const signInBodySchema = z.object({
 	email: zEmail,
 	password: zPassword,
 });
 
-export type SignInFormData = z.infer<typeof signInFormSchema>;
+export type SignUpBody = z.infer<typeof signUpBodySchema>;

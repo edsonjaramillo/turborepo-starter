@@ -1,5 +1,5 @@
 import { userResponseSchema } from "@repo/contracts/users-contracts";
-import { JSend, JSendErrorSchema, JSendSuccessSchema } from "@repo/http/jsend";
+import { JSend, JSendSuccessSchema } from "@repo/http/jsend";
 import { HttpStatus } from "@repo/http/status-codes";
 import { paginationSchema } from "@repo/validation/pagination";
 import { Elysia } from "elysia";
@@ -20,7 +20,6 @@ export const userRouter = new Elysia().resolve(parsePagination).get(
 		query: paginationSchema,
 		response: {
 			[HttpStatus.OK]: JSendSuccessSchema(userResponseSchema),
-			[HttpStatus.BAD_REQUEST]: JSendErrorSchema(),
 		},
 		detail: {
 			tags,
