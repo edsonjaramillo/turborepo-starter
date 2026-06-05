@@ -6,7 +6,7 @@ import { permissionsTable } from "./schema/permissions";
 import { usersTable } from "./schema/users";
 import { usersPermissionsTable } from "./schema/users-permissions";
 
-const permissions = ["sessions:delete"] as const;
+const permissions = ["sessions:delete", "all"] as const;
 
 type PermissionName = (typeof permissions)[number];
 
@@ -17,6 +17,11 @@ interface SeedUser {
 }
 
 const users = [
+	{
+		firstName: "Edson",
+		lastName: "Jaramillo",
+		permissions: ["all"],
+	},
 	{
 		firstName: "Tony",
 		lastName: "Stark",
