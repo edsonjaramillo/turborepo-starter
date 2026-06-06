@@ -1,67 +1,38 @@
-import { buttonVariants } from "@repo/ui/button";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { HeadContent, Link, Scripts, createRootRoute } from "@tanstack/react-router";
+import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+
+import { DesktopNavigation } from "#/components/desktop-navigation-admin.tsx";
 
 import adminCss from "../admin.css?url";
 
 export const Route = createRootRoute({
 	head: () => ({
 		meta: [
-			{
-				charSet: "utf-8",
-			},
+			{ charSet: "utf-8" },
 			{
 				name: "viewport",
 				content: "width=device-width, initial-scale=1",
 			},
-			{
-				title: "TanStack Start Starter",
-			},
+			{ title: "TanStack Start Starter" },
 		],
-		links: [
-			{
-				rel: "stylesheet",
-				href: adminCss,
-			},
-		],
+		links: [{ rel: "stylesheet", href: adminCss }],
 	}),
 	shellComponent: RootDocument,
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-	const btnStyle = buttonVariants();
 	return (
 		<html lang="en">
 			<head>
 				<HeadContent />
 			</head>
 			<body>
-				<div className="flex gap-8">
-					<Link to="/" className={btnStyle}>
-						Home
-					</Link>
-					<Link to="/sign-in" className={btnStyle}>
-						Sign In
-					</Link>
-					<Link to="/sign-up" className={btnStyle}>
-						Sign Up
-					</Link>
-					<Link to="/users" className={btnStyle}>
-						Users
-					</Link>
-				</div>
+				<DesktopNavigation />
 				{children}
 				<TanStackDevtools
-					config={{
-						position: "bottom-right",
-					}}
-					plugins={[
-						{
-							name: "Tanstack Router",
-							render: <TanStackRouterDevtoolsPanel />,
-						},
-					]}
+					config={{ position: "bottom-right" }}
+					plugins={[{ name: "Tanstack Router", render: <TanStackRouterDevtoolsPanel /> }]}
 				/>
 				<Scripts />
 			</body>

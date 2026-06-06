@@ -6,7 +6,7 @@ import { Input, InputError, InputGroup, Label } from "@repo/ui/inputs";
 import { createFileRoute } from "@tanstack/react-router";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { apiClient } from "#/lib/admin-api-client.ts";
+import { apiClient } from "#/lib/admin-api-client";
 
 export const Route = createFileRoute("/sign-in")({
 	component: RouteComponent,
@@ -15,11 +15,16 @@ export const Route = createFileRoute("/sign-in")({
 function RouteComponent() {
 	const form = useForm<SignInBody>({
 		resolver: standardSchemaResolver(signInBodySchema),
+		defaultValues: {
+			email: "edson.jaramillo@example.com",
+			password: "abcd1234",
+		},
 	});
 
 	const onSubmit = form.handleSubmit(async (data) => {
 		await apiClient.auth.signIn(data);
 	});
+
 	return (
 		<div>
 			<FormProvider {...form}>

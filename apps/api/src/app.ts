@@ -30,6 +30,7 @@ export const app = new Elysia({ adapter: BunAdapter })
 		}),
 	)
 	.onError((ctx) => {
+		console.error("Error occurred during request processing:", ctx.error);
 		switch (ctx.code) {
 			case "INTERNAL_SERVER_ERROR":
 				ctx.set.status = HttpStatus.INTERNAL_SERVER_ERROR;
