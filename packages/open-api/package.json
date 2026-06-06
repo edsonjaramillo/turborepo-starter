@@ -17,6 +17,7 @@
 	},
 	"dependencies": {
 		"@repo/contracts": "workspace:*",
+		"@repo/http": "workspace:*",
 		"@repo/validation": "workspace:*"
 	},
 	"devDependencies": {

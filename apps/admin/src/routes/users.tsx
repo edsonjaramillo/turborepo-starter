@@ -22,7 +22,9 @@ function RouteComponent() {
 	return (
 		<div>
 			{users.map((user) => (
-				<div key={user.id}>{user.name}</div>
+				<div key={user.id}>
+					{user.firstName} {user.lastName}
+				</div>
 			))}
 		</div>
 	);
