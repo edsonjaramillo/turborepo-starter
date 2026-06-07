@@ -17,6 +17,7 @@
 	"dependencies": {
 		"@repo/context": "workspace:*",
 		"@repo/open-api": "workspace:*",
+		"@tanstack/react-router": "catalog:",
 		"class-variance-authority": "^0.7.1",
 		"react": "catalog:",
 		"react-dom": "catalog:",

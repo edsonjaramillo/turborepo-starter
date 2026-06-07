@@ -38,7 +38,12 @@ export function DesktopNavigation() {
 						</Link>
 					))}
 				</div>
-				<Avatar apiClient={apiClient} disclosure={avatarDisclosure} session={session} />
+				<Avatar
+					apiClient={apiClient}
+					disclosure={avatarDisclosure}
+					menuLinks={links.map((link) => ({ to: link.href, label: link.name }))}
+					session={session}
+				/>
 			</div>
 		</div>
 	);

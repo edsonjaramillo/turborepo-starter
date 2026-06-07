@@ -4,7 +4,6 @@ import { z } from "zod";
 export const signInResponseSchema = z.object({
 	firstName: zString,
 	lastName: zString,
-	email: zEmail,
 });
 
 export const signUpBodySchema = z.object({

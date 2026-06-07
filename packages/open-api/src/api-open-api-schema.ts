@@ -50,6 +50,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/auth/sign-out": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Sign out a user and clear the current session */
+        get: operations["getAuthSign-out"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/auth/sign-up": {
         parameters: {
             query?: never;
@@ -150,8 +167,6 @@ export interface operations {
                         payload: {
                             firstName: string;
                             lastName: string;
-                            /** Format: email */
-                            email: string;
                         };
                         message: string;
                     };
@@ -206,8 +221,6 @@ export interface operations {
                         payload: {
                             firstName: string;
                             lastName: string;
-                            /** Format: email */
-                            email: string;
                         };
                         message: string;
                     };
@@ -222,6 +235,31 @@ export interface operations {
                     "application/json": {
                         /** @constant */
                         status: "error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "getAuthSign-out": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response for status 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        status: "success";
+                        payload: Record<string, never>;
                         message: string;
                     };
                 };

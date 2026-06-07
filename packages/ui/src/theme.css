@@ -152,8 +152,23 @@
 	--transition-duration*: initial;
 	--transition-duration-base: 350ms;
 
+	/* Animation */
+	--animate-avatar-popup: avatar-popup 160ms ease-out both;
+
 	/* Z-Index */
 	--z-index-*: initial;
 	--z-index-modal: 4;
 	--z-index-blur: 3;
+}
+
+@keyframes avatar-popup {
+	from {
+		opacity: 0;
+		transform: translateY(-0.25rem) scale(0.98);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
 }

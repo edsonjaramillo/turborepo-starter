@@ -29,4 +29,12 @@ export class AuthAPI {
 			}),
 		);
 	}
+
+	async signOut() {
+		return this.api.request(
+			this.api.raw.GET("/auth/sign-out", {
+				credentials: "include",
+			}),
+		);
+	}
 }

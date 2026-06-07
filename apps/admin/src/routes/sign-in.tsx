@@ -27,8 +27,11 @@ function RouteComponent() {
 		},
 	});
 
+	const { setSession } = useSession();
+
 	const onSubmit = form.handleSubmit(async (data) => {
-		await apiClient.auth.signIn(data);
+		const session = await apiClient.auth.signIn(data);
+		setSession(session);
 	});
 
 	return (

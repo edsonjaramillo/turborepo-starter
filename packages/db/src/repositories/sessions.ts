@@ -1,3 +1,5 @@
+import { eq } from "drizzle-orm";
+
 import type { Database } from "../client";
 import { sessionsTable } from "../schema/sessions";
 
@@ -28,6 +30,10 @@ export function createSessionsRepository(db: Database) {
 				return undefined;
 			}
 			return session;
+		},
+
+		async deleteById(sessionId: string) {
+			await db.delete(sessionsTable).where(eq(sessionsTable.id, sessionId));
 		},
 	};
 }

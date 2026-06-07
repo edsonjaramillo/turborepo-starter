@@ -44,7 +44,6 @@ export const authRouter = new Elysia({ prefix: "/auth" })
 				{
 					firstName: user.firstName,
 					lastName: user.lastName,
-					email: user.email,
 				},
 				"Session created successfully",
 			);
@@ -66,7 +65,6 @@ export const authRouter = new Elysia({ prefix: "/auth" })
 		"/re-sign-in",
 		async (ctx) => {
 			const sessionId = ctx.cookie.session?.value;
-			console.log("Session ID from cookie:", sessionId);
 			if (typeof sessionId !== "string" || !sessionId) {
 				ctx.set.status = HttpStatus.UNAUTHORIZED;
 				return JSend.error("Session not found");
@@ -96,6 +94,32 @@ export const authRouter = new Elysia({ prefix: "/auth" })
 			detail: {
 				tags,
 				description: "Find an existing session and return the signed-in user",
+			},
+		},
+	)
+	.get(
+		"/sign-out",
+		async (ctx) => {
+			const sessionId = ctx.cookie.session?.value;
+			if (typeof sessionId === "string" && sessionId) {
+				await database.sessions.deleteById(sessionId);
+			}
+
+			ctx.cookie.session?.set({
+				...createCookie(true, new Date(0)),
+				value: "",
+			});
+
+			ctx.set.status = HttpStatus.OK;
+			return JSend.success({}, "Session ended successfully");
+		},
+		{
+			response: {
+				[HttpStatus.OK]: JSendSuccessSchema(z.object({})),
+			},
+			detail: {
+				tags,
+				description: "Sign out a user and clear the current session",
 			},
 		},
 	)
