@@ -1,7 +1,6 @@
 import { Avatar } from "@repo/ui/avatar";
 import { Link } from "@tanstack/react-router";
 
-import { useAvatarDisclosure, useSession } from "#/context/admin-context";
 import { apiClient } from "#/lib/admin-api-client";
 
 const links = [
@@ -24,9 +23,6 @@ const links = [
 ];
 
 export function DesktopNavigation() {
-	const avatarDisclosure = useAvatarDisclosure();
-	const session = useSession();
-
 	return (
 		<div className="bg-primary">
 			<div className="mx-auto flex h-navigation w-responsive items-center justify-between">
@@ -40,9 +36,7 @@ export function DesktopNavigation() {
 				</div>
 				<Avatar
 					apiClient={apiClient}
-					disclosure={avatarDisclosure}
 					menuLinks={links.map((link) => ({ to: link.href, label: link.name }))}
-					session={session}
 				/>
 			</div>
 		</div>

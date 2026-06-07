@@ -1,17 +1,19 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { signInBodySchema, type SignInBody } from "@repo/contracts/auth-contracts";
+import { authSessionQueryKey, authSessionQueryOptions } from "@repo/ui/auth-query";
 import { Button } from "@repo/ui/button";
 import { Form } from "@repo/ui/form";
 import { Input, InputError, InputGroup, Label } from "@repo/ui/inputs";
+import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { useSession } from "#/context/admin-context";
 import { apiClient } from "#/lib/admin-api-client";
 
 export const Route = createFileRoute("/sign-in")({
-	beforeLoad: () => {
-		if (useSession.getState().isAuthenticated) {
+	beforeLoad: async ({ context }) => {
+		const session = await context.queryClient.ensureQueryData(authSessionQueryOptions(apiClient));
+		if (session) {
 			throw redirect({ to: "/" });
 		}
 	},
@@ -19,6 +21,7 @@ export const Route = createFileRoute("/sign-in")({
 });
 
 function RouteComponent() {
+	const queryClient = useQueryClient();
 	const form = useForm<SignInBody>({
 		resolver: standardSchemaResolver(signInBodySchema),
 		defaultValues: {
@@ -27,11 +30,9 @@ function RouteComponent() {
 		},
 	});
 
-	const { setSession } = useSession();
-
 	const onSubmit = form.handleSubmit(async (data) => {
 		const session = await apiClient.auth.signIn(data);
-		setSession(session);
+		queryClient.setQueryData(authSessionQueryKey, session);
 	});
 
 	return (

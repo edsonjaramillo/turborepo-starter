@@ -1,17 +1,18 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { signUpBodySchema, type SignUpBody } from "@repo/contracts/auth-contracts";
+import { authSessionQueryOptions } from "@repo/ui/auth-query";
 import { Button } from "@repo/ui/button";
 import { Form } from "@repo/ui/form";
 import { Input, InputColumns, InputError, InputGroup, Label } from "@repo/ui/inputs";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { useSession } from "#/context/admin-context";
 import { apiClient } from "#/lib/admin-api-client";
 
 export const Route = createFileRoute("/sign-up")({
-	beforeLoad: () => {
-		if (useSession.getState().isAuthenticated) {
+	beforeLoad: async ({ context }) => {
+		const session = await context.queryClient.ensureQueryData(authSessionQueryOptions(apiClient));
+		if (session) {
 			throw redirect({ to: "/" });
 		}
 	},

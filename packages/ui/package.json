@@ -15,8 +15,8 @@
 		"lint:fix": "oxlint src --fix --max-warnings 0"
 	},
 	"dependencies": {
-		"@repo/context": "workspace:*",
 		"@repo/open-api": "workspace:*",
+		"@tanstack/react-query": "catalog:",
 		"@tanstack/react-router": "catalog:",
 		"class-variance-authority": "^0.7.1",
 		"react": "catalog:",

@@ -1,42 +1,18 @@
-import type { DisclosureStore } from "@repo/context/disclosure";
-import type { SessionStore, SessionUser } from "@repo/context/session";
 import type { APIClient } from "@repo/open-api/api-client";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 
+import { authSessionQueryKey, authSessionQueryOptions, type AuthSession } from "./auth-query";
 import { cn } from "./lib/cn";
 
-type SignedInUser = Awaited<ReturnType<APIClient["auth"]["reSignIn"]>>;
-
-const pendingAutoSignInRequests = new WeakMap<APIClient, Promise<SignedInUser | null>>();
 const avatarMenuItemClassName = cn(
 	"flex w-full items-center rounded-base px-3 py-2 text-left text-sm text-black transition-colors duration-base hover:bg-muted focus-visible:ring-2 focus-visible:ring-info focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:text-gray",
 );
 
-function autoSignIn(apiClient: APIClient) {
-	const cachedRequest = pendingAutoSignInRequests.get(apiClient);
-	if (cachedRequest) {
-		return cachedRequest;
-	}
-
-	const request = apiClient.auth
-		.reSignIn()
-		.catch(() => null)
-		.finally(() => {
-			if (pendingAutoSignInRequests.get(apiClient) === request) {
-				pendingAutoSignInRequests.delete(apiClient);
-			}
-		});
-	pendingAutoSignInRequests.set(apiClient, request);
-
-	return request;
-}
-
 export interface AvatarProps {
 	apiClient: APIClient;
-	disclosure: DisclosureStore;
-	session: SessionStore;
 	menuLinks: readonly AvatarMenuLink[];
 	signInTo?: string;
 }
@@ -51,7 +27,7 @@ interface AvatarTriggerProps {
 	isOpen: boolean;
 	isSessionPending: boolean;
 	onClick: () => void;
-	user: SessionUser | undefined;
+	user: AuthSession | null | undefined;
 }
 
 interface AvatarMenuProps {
@@ -61,45 +37,27 @@ interface AvatarMenuProps {
 	isSigningOut: boolean;
 	menuLinks: readonly AvatarMenuLink[];
 	onClose: () => void;
-	onSignOut: () => Promise<void>;
+	onSignOut: () => void;
 	signInTo: string;
 }
 
-export function Avatar({
-	apiClient,
-	disclosure,
-	menuLinks,
-	session,
-	signInTo = "/sign-in",
-}: AvatarProps) {
-	const { clearSession, isAuthenticated, setSession, user } = session;
-	const { close, isOpen, toggle } = disclosure;
+export function Avatar({ apiClient, menuLinks, signInTo = "/sign-in" }: AvatarProps) {
 	const menuId = useId();
 	const rootRef = useRef<HTMLDivElement>(null);
-	const [hasCheckedSession, setHasCheckedSession] = useState(false);
-	const [isSigningOut, setIsSigningOut] = useState(false);
+	const queryClient = useQueryClient();
+	const [isOpen, setIsOpen] = useState(false);
 
-	useEffect(() => {
-		let isCurrent = true;
-		setHasCheckedSession(false);
-
-		autoSignIn(apiClient).then((nextUser) => {
-			if (!isCurrent) {
-				return;
-			}
-
-			if (nextUser) {
-				setSession(nextUser);
-			} else {
-				clearSession();
-			}
-			setHasCheckedSession(true);
-		});
-
-		return () => {
-			isCurrent = false;
-		};
-	}, [apiClient, setSession, clearSession]);
+	const sessionQuery = useQuery(authSessionQueryOptions(apiClient));
+	const close = useCallback(() => {
+		setIsOpen(false);
+	}, []);
+	const signOutMutation = useMutation({
+		mutationFn: () => apiClient.auth.signOut(),
+		onSuccess: () => {
+			queryClient.setQueryData(authSessionQueryKey, null);
+			close();
+		},
+	});
 
 	useEffect(() => {
 		if (!isOpen) {
@@ -130,22 +88,20 @@ export function Avatar({
 		};
 	}, [close, isOpen]);
 
-	async function handleSignOut() {
-		if (isSigningOut) {
+	const toggle = useCallback(() => {
+		setIsOpen((current) => !current);
+	}, []);
+
+	function handleSignOut() {
+		if (signOutMutation.isPending) {
 			return;
 		}
 
-		setIsSigningOut(true);
-		try {
-			await apiClient.auth.signOut();
-			clearSession();
-			close();
-		} finally {
-			setIsSigningOut(false);
-		}
+		signOutMutation.mutate();
 	}
 
-	const isSessionPending = !hasCheckedSession && user === undefined;
+	const user = sessionQuery.data;
+	const isSessionPending = sessionQuery.isPending;
 
 	return (
 		<div ref={rootRef} className="relative flex flex-col items-end">
@@ -158,9 +114,9 @@ export function Avatar({
 			/>
 			<AvatarMenu
 				id={menuId}
-				isAuthenticated={isAuthenticated}
+				isAuthenticated={Boolean(user)}
 				isOpen={isOpen}
-				isSigningOut={isSigningOut}
+				isSigningOut={signOutMutation.isPending}
 				menuLinks={menuLinks}
 				onClose={close}
 				onSignOut={handleSignOut}
@@ -259,11 +215,11 @@ function UserCircleIcon({ className }: { className?: string }) {
 	);
 }
 
-function getUserInitials(user: SessionUser) {
+function getUserInitials(user: AuthSession) {
 	const initials = `${user.firstName.trim().charAt(0)}${user.lastName.trim().charAt(0)}`;
 	return initials.toUpperCase() || "?";
 }
 
-function getUserName(user: SessionUser) {
+function getUserName(user: AuthSession) {
 	return `${user.firstName} ${user.lastName}`.trim();
 }

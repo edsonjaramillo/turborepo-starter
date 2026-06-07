@@ -27,6 +27,7 @@
 		"@repo/validation": "workspace:*",
 		"@tailwindcss/vite": "catalog:",
 		"@tanstack/react-devtools": "catalog:",
+		"@tanstack/react-query": "catalog:",
 		"@tanstack/react-router": "catalog:",
 		"@tanstack/react-router-devtools": "catalog:",
 		"@tanstack/react-router-ssr-query": "catalog:",
