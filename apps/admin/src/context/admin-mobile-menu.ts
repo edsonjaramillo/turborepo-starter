@@ -1,3 +1,3 @@
-import { createMobileMenuStore } from "@repo/context/mobile-menu";
+import { createDisclosureStore } from "@repo/context/disclosure";
 
-export const useMobileMenu = createMobileMenuStore();
+export const useMobileMenu = createDisclosureStore();

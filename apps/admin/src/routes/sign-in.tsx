@@ -3,12 +3,18 @@ import { signInBodySchema, type SignInBody } from "@repo/contracts/auth-contract
 import { Button } from "@repo/ui/button";
 import { Form } from "@repo/ui/form";
 import { Input, InputError, InputGroup, Label } from "@repo/ui/inputs";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { FormProvider, useForm } from "react-hook-form";
 
+import { useSession } from "#/context/admin-context";
 import { apiClient } from "#/lib/admin-api-client";
 
 export const Route = createFileRoute("/sign-in")({
+	beforeLoad: () => {
+		if (useSession.getState().isAuthenticated) {
+			throw redirect({ to: "/" });
+		}
+	},
 	component: RouteComponent,
 });
 

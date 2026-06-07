@@ -2,7 +2,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import { DesktopNavigation } from "#/components/desktop-navigation-admin.tsx";
+import { DesktopNavigation } from "#/components/desktop-navigation-admin";
 
 import adminCss from "../admin.css?url";
 
@@ -19,6 +19,7 @@ export const Route = createRootRoute({
 		links: [{ rel: "stylesheet", href: adminCss }],
 	}),
 	shellComponent: RootDocument,
+	notFoundComponent: () => <div className="text-2xl font-bold text-danger">Not Found</div>,
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {

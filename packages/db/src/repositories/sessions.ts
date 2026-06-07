@@ -10,6 +10,18 @@ export function createSessionsRepository(db: Database) {
 			});
 		},
 
+		async getSignInProfileById(sessionId: string) {
+			return await db.query.sessionsTable.findFirst({
+				where: { id: sessionId },
+				columns: { id: true, expiresAt: true },
+				with: {
+					user: {
+						columns: { firstName: true, lastName: true, email: true },
+					},
+				},
+			});
+		},
+
 		async create(userId: string, expiresAt: Date) {
 			const [session] = await db.insert(sessionsTable).values({ userId, expiresAt }).returning();
 			if (!session) {

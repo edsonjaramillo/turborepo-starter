@@ -1,7 +1,7 @@
 import type { StoreApi, UseBoundStore } from "zustand";
 import { create } from "zustand";
 
-export type MobileMenuContext = ReturnType<typeof createMobileMenuStore>;
+export type DisclosureContext = ReturnType<typeof createDisclosureStore>;
 
 interface State {
 	isOpen: boolean;
@@ -13,10 +13,10 @@ interface Actions {
 	toggle: () => void;
 }
 
-export interface MobileMenuStore extends State, Actions {}
+export interface DisclosureStore extends State, Actions {}
 
-export function createMobileMenuStore(): UseBoundStore<StoreApi<MobileMenuStore>> {
-	return create<MobileMenuStore>((set) => ({
+export function createDisclosureStore(): UseBoundStore<StoreApi<DisclosureStore>> {
+	return create<DisclosureStore>((set) => ({
 		isOpen: false,
 		open() {
 			set({ isOpen: true });

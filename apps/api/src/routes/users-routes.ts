@@ -9,7 +9,7 @@ import { parsePagination } from "../middleware/paginate";
 
 const tags = ["Users"];
 
-export const userRouter = new Elysia({ prefix: "/users/" }).resolve(parsePagination).get(
+export const userRouter = new Elysia({ prefix: "/users" }).resolve(parsePagination).get(
 	"/",
 	async (ctx) => {
 		const users = await database.users.list(ctx.pagination);

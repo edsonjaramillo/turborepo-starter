@@ -33,6 +33,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/auth/re-sign-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Find an existing session and return the signed-in user */
+        get: operations["getAuthRe-sign-in"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/auth/sign-up": {
         parameters: {
             query?: never;
@@ -155,6 +172,49 @@ export interface operations {
             };
             /** @description Response for status 500 */
             500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        status: "error";
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "getAuthRe-sign-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response for status 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @constant */
+                        status: "success";
+                        payload: {
+                            firstName: string;
+                            lastName: string;
+                            /** Format: email */
+                            email: string;
+                        };
+                        message: string;
+                    };
+                };
+            };
+            /** @description Response for status 401 */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };

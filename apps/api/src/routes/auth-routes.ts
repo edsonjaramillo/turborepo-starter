@@ -62,6 +62,43 @@ export const authRouter = new Elysia({ prefix: "/auth" })
 			},
 		},
 	)
+	.get(
+		"/re-sign-in",
+		async (ctx) => {
+			const sessionId = ctx.cookie.session?.value;
+			console.log("Session ID from cookie:", sessionId);
+			if (typeof sessionId !== "string" || !sessionId) {
+				ctx.set.status = HttpStatus.UNAUTHORIZED;
+				return JSend.error("Session not found");
+			}
+
+			const session = await database.sessions.getSignInProfileById(sessionId);
+			if (!session || !session.user || session.expiresAt <= new Date()) {
+				ctx.set.status = HttpStatus.UNAUTHORIZED;
+				return JSend.error("Session not found");
+			}
+
+			ctx.set.status = HttpStatus.OK;
+			return JSend.success(
+				{
+					firstName: session.user.firstName,
+					lastName: session.user.lastName,
+					email: session.user.email,
+				},
+				"Session found successfully",
+			);
+		},
+		{
+			response: {
+				[HttpStatus.OK]: JSendSuccessSchema(signInResponseSchema),
+				[HttpStatus.UNAUTHORIZED]: JSendErrorSchema(),
+			},
+			detail: {
+				tags,
+				description: "Find an existing session and return the signed-in user",
+			},
+		},
+	)
 	.post(
 		"/sign-up",
 		async (ctx) => {

@@ -1,4 +1,8 @@
 import { Avatar } from "@repo/ui/avatar";
+import { Link } from "@tanstack/react-router";
+
+import { useAvatarDisclosure, useSession } from "#/context/admin-context";
+import { apiClient } from "#/lib/admin-api-client";
 
 const links = [
 	{
@@ -20,18 +24,21 @@ const links = [
 ];
 
 export function DesktopNavigation() {
+	const avatarDisclosure = useAvatarDisclosure();
+	const session = useSession();
+
 	return (
 		<div className="bg-primary">
-			<div className="mx-auto flex h-navigation w-responsive items-center justify-between border">
+			<div className="mx-auto flex h-navigation w-responsive items-center justify-between">
 				<span>Logo</span>
 				<div className="flex gap-8">
 					{links.map((link) => (
-						<a key={link.name} href={link.href} className="text-white">
+						<Link key={link.name} to={link.href} className="text-white">
 							{link.name}
-						</a>
+						</Link>
 					))}
 				</div>
-				<Avatar />
+				<Avatar apiClient={apiClient} disclosure={avatarDisclosure} session={session} />
 			</div>
 		</div>
 	);
