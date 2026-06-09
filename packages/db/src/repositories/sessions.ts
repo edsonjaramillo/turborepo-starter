@@ -27,7 +27,7 @@ export function createSessionsRepository(db: Database) {
 		async create(userId: string, expiresAt: Date) {
 			const [session] = await db.insert(sessionsTable).values({ userId, expiresAt }).returning();
 			if (!session) {
-				return undefined;
+				return;
 			}
 			return session;
 		},
@@ -39,7 +39,7 @@ export function createSessionsRepository(db: Database) {
 				.where(eq(sessionsTable.id, sessionId))
 				.returning();
 			if (!session) {
-				return undefined;
+				return;
 			}
 			return session;
 		},

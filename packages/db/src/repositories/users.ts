@@ -37,7 +37,7 @@ export function createUsersRepository(db: Database) {
 			});
 
 			if (!user) {
-				return undefined;
+				return;
 			}
 
 			return user;

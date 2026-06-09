@@ -2,7 +2,8 @@
 	"$schema": "../../../node_modules/oxlint/configuration_schema.json",
 	"plugins": ["import", "node", "oxc", "promise", "typescript", "unicorn"],
 	"categories": {
-		"correctness": "error"
+		"correctness": "error",
+		"pedantic": "error"
 	},
 	"rules": {
 		"no-unused-vars": "error"

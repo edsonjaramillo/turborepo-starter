@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { zString } from "./core";
 
-const positiveNonZeroInteger = /^[1-9]\d*$/;
+const positiveNonZeroInteger = /^[1-9]\d*$/u;
 export const nonZeroSchema = zString.regex(positiveNonZeroInteger, {
 	message: "Must be a positive non-zero integer",
 });

@@ -11,8 +11,8 @@ const DEFAULT_PAGE = 1;
 
 export function parsePagination({ query }: { query: unknown }): { pagination: Pagination } {
 	const parsedQuery = paginationSchema.parse(query);
-	const page = parsedQuery.page ? Number.parseInt(parsedQuery.page) : DEFAULT_PAGE;
-	const limit = parsedQuery.limit ? Number.parseInt(parsedQuery.limit) : DEFAULT_LIMIT;
+	const page = parsedQuery.page ? Number.parseInt(parsedQuery.page, 10) : DEFAULT_PAGE;
+	const limit = parsedQuery.limit ? Number.parseInt(parsedQuery.limit, 10) : DEFAULT_LIMIT;
 
 	return { pagination: { page, limit, offset: (page - 1) * limit } };
 }

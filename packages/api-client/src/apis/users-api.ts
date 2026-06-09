@@ -6,7 +6,7 @@ import type { APIClient } from "../api-client";
 export class UsersAPI {
 	constructor(private api: APIClient) {}
 
-	async list(pagination: PaginationSchema): Promise<UserResponse> {
+	list(pagination: PaginationSchema): Promise<UserResponse> {
 		return this.api.request<UserResponse>(this.api.listUsers(pagination));
 	}
 }

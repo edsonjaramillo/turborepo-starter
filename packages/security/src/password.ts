@@ -8,9 +8,9 @@ const hashOptions: argon2.Options = {
 };
 
 export async function hashPassword(password: string) {
-	return argon2.hash(password, hashOptions);
+	return await argon2.hash(password, hashOptions);
 }
 
 export async function verifyPassword(hash: string, password: string) {
-	return argon2.verify(hash, password, hashOptions);
+	return await argon2.verify(hash, password, hashOptions);
 }
