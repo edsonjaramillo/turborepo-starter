@@ -1,4 +1,4 @@
-import { Avatar } from "@repo/ui/avatar";
+import { AuthAvatar } from "@repo/ui/avatar";
 import { Link } from "@tanstack/react-router";
 
 import { apiClient } from "#/lib/admin-api-client";
@@ -34,7 +34,7 @@ export function DesktopNavigation() {
 						</Link>
 					))}
 				</div>
-				<Avatar
+				<AuthAvatar
 					apiClient={apiClient}
 					menuLinks={links.map((link) => ({ to: link.href, label: link.name }))}
 				/>

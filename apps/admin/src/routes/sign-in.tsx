@@ -1,6 +1,6 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { signInBodySchema, type SignInBody } from "@repo/contracts/auth-contracts";
-import { authSessionQueryKey, authSessionQueryOptions } from "@repo/ui/auth-query";
+import { authSessionQueryOptions, refreshAuthSession } from "@repo/ui/auth-query";
 import { Button } from "@repo/ui/button";
 import { Form } from "@repo/ui/form";
 import { Input, InputError, InputGroup, Label } from "@repo/ui/inputs";
@@ -31,8 +31,8 @@ function RouteComponent() {
 	});
 
 	const onSubmit = form.handleSubmit(async (data) => {
-		const session = await apiClient.auth.signIn(data);
-		queryClient.setQueryData(authSessionQueryKey, session);
+		await apiClient.auth.signIn(data);
+		await refreshAuthSession(queryClient, apiClient);
 	});
 
 	return (

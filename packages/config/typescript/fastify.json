@@ -13,7 +13,7 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"strict": true,
-		"types": ["bun", "node"],
+		"types": ["node"],
 		"verbatimModuleSyntax": true
 	}
 }

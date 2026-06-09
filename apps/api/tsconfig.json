@@ -1,4 +1,4 @@
 {
-	"extends": "@repo/config/typescript/elysia.json",
+	"extends": "@repo/config/typescript/fastify.json",
 	"include": ["src/**/*.ts"]
 }

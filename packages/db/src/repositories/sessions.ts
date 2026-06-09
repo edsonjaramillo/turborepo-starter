@@ -32,6 +32,18 @@ export function createSessionsRepository(db: Database) {
 			return session;
 		},
 
+		async updateExpiresAt(sessionId: string, expiresAt: Date) {
+			const [session] = await db
+				.update(sessionsTable)
+				.set({ expiresAt })
+				.where(eq(sessionsTable.id, sessionId))
+				.returning();
+			if (!session) {
+				return undefined;
+			}
+			return session;
+		},
+
 		async deleteById(sessionId: string) {
 			await db.delete(sessionsTable).where(eq(sessionsTable.id, sessionId));
 		},

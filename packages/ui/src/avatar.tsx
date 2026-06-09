@@ -1,10 +1,9 @@
-import type { APIClient } from "@repo/open-api/api-client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { APIClient } from "@repo/api-client/api-client";
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 
-import { authSessionQueryKey, authSessionQueryOptions, type AuthSession } from "./auth-query";
+import { useAuthSession, useSignOut } from "./auth-query";
 import { cn } from "./lib/cn";
 
 const avatarMenuItemClassName = cn(
@@ -12,14 +11,39 @@ const avatarMenuItemClassName = cn(
 );
 
 export interface AvatarProps {
+	isSessionPending?: boolean;
+	isSigningOut?: boolean;
+	menuItems: readonly AvatarMenuItem[];
+	onSignOut?: (closeMenu: () => void) => void;
+	signInItem?: AvatarMenuItem;
+	user: AvatarUser | null | undefined;
+}
+
+export interface AuthAvatarProps {
 	apiClient: APIClient;
-	menuLinks: readonly AvatarMenuLink[];
+	menuLinks: readonly AuthAvatarMenuLink[];
 	signInTo?: string;
 }
 
-export interface AvatarMenuLink {
+export interface AuthAvatarMenuLink {
 	to: string;
 	label: ReactNode;
+}
+
+export interface AvatarMenuItem {
+	id: string;
+	label: ReactNode;
+	render: (props: AvatarMenuItemRenderProps) => ReactNode;
+}
+
+export interface AvatarMenuItemRenderProps {
+	className: string;
+	onSelect: () => void;
+}
+
+export interface AvatarUser {
+	firstName: string;
+	lastName: string;
 }
 
 interface AvatarTriggerProps {
@@ -27,7 +51,7 @@ interface AvatarTriggerProps {
 	isOpen: boolean;
 	isSessionPending: boolean;
 	onClick: () => void;
-	user: AuthSession | null | undefined;
+	user: AvatarUser | null | undefined;
 }
 
 interface AvatarMenuProps {
@@ -35,29 +59,51 @@ interface AvatarMenuProps {
 	isAuthenticated: boolean;
 	isOpen: boolean;
 	isSigningOut: boolean;
-	menuLinks: readonly AvatarMenuLink[];
+	menuItems: readonly AvatarMenuItem[];
 	onClose: () => void;
-	onSignOut: () => void;
-	signInTo: string;
+	onSignOut?: () => void;
+	signInItem?: AvatarMenuItem;
 }
 
-export function Avatar({ apiClient, menuLinks, signInTo = "/sign-in" }: AvatarProps) {
+export function AuthAvatar({ apiClient, menuLinks, signInTo = "/sign-in" }: AuthAvatarProps) {
+	const sessionQuery = useAuthSession(apiClient);
+	const signOutMutation = useSignOut(apiClient);
+	const menuItems = menuLinks.map(createRouterMenuItem);
+	const signInItem = createRouterMenuItem({ to: signInTo, label: "Sign In" });
+
+	return (
+		<Avatar
+			isSessionPending={sessionQuery.isPending}
+			isSigningOut={signOutMutation.isPending}
+			menuItems={menuItems}
+			onSignOut={(closeMenu) => {
+				if (signOutMutation.isPending) {
+					return;
+				}
+
+				signOutMutation.mutate(undefined, { onSuccess: closeMenu });
+			}}
+			signInItem={signInItem}
+			user={sessionQuery.data}
+		/>
+	);
+}
+
+export function Avatar({
+	isSessionPending = false,
+	isSigningOut = false,
+	menuItems,
+	onSignOut,
+	signInItem,
+	user,
+}: AvatarProps) {
 	const menuId = useId();
 	const rootRef = useRef<HTMLDivElement>(null);
-	const queryClient = useQueryClient();
 	const [isOpen, setIsOpen] = useState(false);
 
-	const sessionQuery = useQuery(authSessionQueryOptions(apiClient));
 	const close = useCallback(() => {
 		setIsOpen(false);
 	}, []);
-	const signOutMutation = useMutation({
-		mutationFn: () => apiClient.auth.signOut(),
-		onSuccess: () => {
-			queryClient.setQueryData(authSessionQueryKey, null);
-			close();
-		},
-	});
 
 	useEffect(() => {
 		if (!isOpen) {
@@ -93,15 +139,12 @@ export function Avatar({ apiClient, menuLinks, signInTo = "/sign-in" }: AvatarPr
 	}, []);
 
 	function handleSignOut() {
-		if (signOutMutation.isPending) {
+		if (!onSignOut || isSigningOut) {
 			return;
 		}
 
-		signOutMutation.mutate();
+		onSignOut(close);
 	}
-
-	const user = sessionQuery.data;
-	const isSessionPending = sessionQuery.isPending;
 
 	return (
 		<div ref={rootRef} className="relative flex flex-col items-end">
@@ -116,11 +159,11 @@ export function Avatar({ apiClient, menuLinks, signInTo = "/sign-in" }: AvatarPr
 				id={menuId}
 				isAuthenticated={Boolean(user)}
 				isOpen={isOpen}
-				isSigningOut={signOutMutation.isPending}
-				menuLinks={menuLinks}
+				isSigningOut={isSigningOut}
+				menuItems={menuItems}
 				onClose={close}
-				onSignOut={handleSignOut}
-				signInTo={signInTo}
+				onSignOut={onSignOut ? handleSignOut : undefined}
+				signInItem={signInItem}
 			/>
 		</div>
 	);
@@ -158,10 +201,10 @@ function AvatarMenu({
 	isAuthenticated,
 	isOpen,
 	isSigningOut,
-	menuLinks,
+	menuItems,
 	onClose,
 	onSignOut,
-	signInTo,
+	signInItem,
 }: AvatarMenuProps) {
 	return (
 		<div
@@ -173,10 +216,8 @@ function AvatarMenu({
 			)}
 		>
 			<nav aria-label="Account menu" className="flex flex-col gap-1">
-				{menuLinks.map((link) => (
-					<Link key={link.to} className={avatarMenuItemClassName} onClick={onClose} to={link.to}>
-						{link.label}
-					</Link>
+				{menuItems.map((item) => (
+					<MenuItem key={item.id} item={item} onSelect={onClose} />
 				))}
 				{isAuthenticated ? (
 					<button
@@ -187,14 +228,35 @@ function AvatarMenu({
 					>
 						{isSigningOut ? "Signing out..." : "Sign Out"}
 					</button>
-				) : (
-					<Link className={avatarMenuItemClassName} onClick={onClose} to={signInTo}>
-						Sign In
-					</Link>
-				)}
+				) : signInItem ? (
+					<MenuItem item={signInItem} onSelect={onClose} />
+				) : null}
 			</nav>
 		</div>
 	);
+}
+
+function MenuItem({ item, onSelect }: { item: AvatarMenuItem; onSelect: () => void }) {
+	return (
+		<>
+			{item.render({
+				className: avatarMenuItemClassName,
+				onSelect,
+			})}
+		</>
+	);
+}
+
+function createRouterMenuItem({ label, to }: AuthAvatarMenuLink): AvatarMenuItem {
+	return {
+		id: to,
+		label,
+		render: ({ className, onSelect }) => (
+			<Link className={className} onClick={onSelect} to={to}>
+				{label}
+			</Link>
+		),
+	};
 }
 
 function UserCircleIcon({ className }: { className?: string }) {
@@ -215,11 +277,11 @@ function UserCircleIcon({ className }: { className?: string }) {
 	);
 }
 
-function getUserInitials(user: AuthSession) {
+function getUserInitials(user: AvatarUser) {
 	const initials = `${user.firstName.trim().charAt(0)}${user.lastName.trim().charAt(0)}`;
 	return initials.toUpperCase() || "?";
 }
 
-function getUserName(user: AuthSession) {
+function getUserName(user: AvatarUser) {
 	return `${user.firstName} ${user.lastName}`.trim();
 }
