@@ -12,10 +12,10 @@
 		"format": "oxfmt .",
 		"format:check": "oxfmt --check .",
 		"lint": "oxlint src --max-warnings 0",
-		"lint:fix": "oxlint src --fix --max-warnings 0"
+		"lint:fix": "oxlint src --fix"
 	},
 	"dependencies": {
-		"@repo/open-api": "workspace:*",
+		"@repo/api-client": "workspace:*",
 		"@tanstack/react-query": "catalog:",
 		"@tanstack/react-router": "catalog:",
 		"class-variance-authority": "^0.7.1",

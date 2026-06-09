@@ -16,13 +16,13 @@
 		"format": "oxfmt .",
 		"format:check": "oxfmt --check .",
 		"lint": "oxlint src vite.config.ts --max-warnings 0",
-		"lint:fix": "oxlint src vite.config.ts --fix --max-warnings 0"
+		"lint:fix": "oxlint src vite.config.ts --fix"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "catalog:",
+		"@repo/api-client": "workspace:*",
 		"@repo/context": "workspace:*",
 		"@repo/contracts": "workspace:*",
-		"@repo/open-api": "workspace:*",
 		"@repo/ui": "workspace:*",
 		"@repo/validation": "workspace:*",
 		"@tailwindcss/vite": "catalog:",

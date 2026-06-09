@@ -5,6 +5,7 @@
 	"private": true,
 	"type": "module",
 	"exports": {
+		"./api-contracts": "./src/api-contracts.ts",
 		"./auth-contracts": "./src/auth-contracts.ts",
 		"./users-contracts": "./src/users-contracts.ts"
 	},
@@ -12,11 +13,13 @@
 		"check-types": "tsgo --noEmit",
 		"format": "oxfmt .",
 		"format:check": "oxfmt --check .",
-		"lint": "oxlint src --config oxlint.json --max-warnings 0",
-		"lint:fix": "oxlint src --config oxlint.json --fix --max-warnings 0"
+		"lint": "oxlint src --max-warnings 0",
+		"lint:fix": "oxlint src --fix"
 	},
 	"dependencies": {
+		"@repo/http": "workspace:*",
 		"@repo/validation": "workspace:*",
+		"@ts-rest/core": "^3.53.0-rc.1",
 		"zod": "catalog:"
 	},
 	"devDependencies": {

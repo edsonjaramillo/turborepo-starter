@@ -21,8 +21,8 @@
 		"studio": "infisical run -- drizzle-kit studio",
 		"format": "oxfmt .",
 		"format:check": "oxfmt --check .",
-		"lint": "oxlint src drizzle.config.ts --config oxlint.json --max-warnings 0",
-		"lint:fix": "oxlint src drizzle.config.ts --config oxlint.json --fix --max-warnings 0"
+		"lint": "oxlint src drizzle.config.ts --max-warnings 0",
+		"lint:fix": "oxlint src drizzle.config.ts --fix"
 	},
 	"dependencies": {
 		"@repo/security": "workspace:*",
