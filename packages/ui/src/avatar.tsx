@@ -1,7 +1,7 @@
 import type { APIClient } from "@repo/api-client/api-client";
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useCallback, useId, useRef, useState } from "react";
 
 import { useAuthSession, useSignOut } from "./auth-query";
 import { cn } from "./lib/cn";
@@ -104,35 +104,6 @@ export function Avatar({
 	const close = useCallback(() => {
 		setIsOpen(false);
 	}, []);
-
-	useEffect(() => {
-		if (!isOpen) {
-			return;
-		}
-
-		function handlePointerDown(event: PointerEvent) {
-			const target = event.target;
-			if (!(target instanceof Node) || rootRef.current?.contains(target)) {
-				return;
-			}
-
-			close();
-		}
-
-		function handleKeyDown(event: KeyboardEvent) {
-			if (event.key === "Escape") {
-				close();
-			}
-		}
-
-		document.addEventListener("pointerdown", handlePointerDown);
-		document.addEventListener("keydown", handleKeyDown);
-
-		return () => {
-			document.removeEventListener("pointerdown", handlePointerDown);
-			document.removeEventListener("keydown", handleKeyDown);
-		};
-	}, [close, isOpen]);
 
 	const toggle = useCallback(() => {
 		setIsOpen((current) => !current);
