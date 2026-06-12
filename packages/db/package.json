@@ -21,8 +21,8 @@
 		"studio": "infisical run -- drizzle-kit studio",
 		"format": "oxfmt .",
 		"format:check": "oxfmt --check .",
-		"lint": "oxlint src drizzle.config.ts --max-warnings 0",
-		"lint:fix": "oxlint src drizzle.config.ts --fix"
+		"lint": "oxlint --type-aware --type-check src drizzle.config.ts --max-warnings 0",
+		"lint:fix": "oxlint --type-aware --type-check src drizzle.config.ts --fix"
 	},
 	"dependencies": {
 		"@repo/security": "workspace:*",
@@ -40,6 +40,7 @@
 		"@typescript/native-preview": "catalog:",
 		"drizzle-kit": "1.0.0-rc.3-abc2ef6",
 		"oxfmt": "catalog:",
-		"oxlint": "catalog:"
+		"oxlint": "catalog:",
+		"oxlint-tsgolint": "catalog:"
 	}
 }

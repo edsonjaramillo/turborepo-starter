@@ -92,7 +92,7 @@ async function seed() {
 	const getPermissionId = (permission: PermissionName) => {
 		const permissionId = permissionIds.get(permission);
 
-		if (!permissionId) {
+		if (permissionId === undefined) {
 			throw new Error(`Failed to seed permission ${permission}`);
 		}
 

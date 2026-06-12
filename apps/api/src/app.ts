@@ -47,32 +47,6 @@ app.setErrorHandler((error, _request, reply) => {
 		return;
 	}
 
-	const statusCode = getErrorStatusCode(error);
-	if (typeof statusCode === "number") {
-		switch (statusCode) {
-			case HttpStatus.BAD_REQUEST:
-				reply
-					.status(HttpStatus.BAD_REQUEST)
-					.send(JSend.error("Failed to parse the request body. Please ensure it is valid JSON."));
-				return;
-			case HttpStatus.UNSUPPORTED_MEDIA_TYPE:
-				reply
-					.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-					.send(JSend.error("Invalid file type uploaded."));
-				return;
-			default:
-				break;
-		}
-	}
-
+	console.error("Unexpected error:", error);
 	reply.status(HttpStatus.INTERNAL_SERVER_ERROR).send(JSend.error("An unexpected error occurred."));
 });
-
-function getErrorStatusCode(error: unknown): number | undefined {
-	if (!error || typeof error !== "object" || !("statusCode" in error)) {
-		return undefined;
-	}
-
-	const { statusCode } = error;
-	return typeof statusCode === "number" ? statusCode : undefined;
-}

@@ -11,8 +11,8 @@
 		"check-types": "tsgo --noEmit",
 		"format": "oxfmt .",
 		"format:check": "oxfmt --check .",
-		"lint": "oxlint src --max-warnings 0",
-		"lint:fix": "oxlint src --fix"
+		"lint": "oxlint --type-aware --type-check src --max-warnings 0",
+		"lint:fix": "oxlint --type-aware --type-check src --fix"
 	},
 	"dependencies": {
 		"argon2": "^0.44.0"
@@ -22,6 +22,7 @@
 		"@types/node": "catalog:",
 		"@typescript/native-preview": "catalog:",
 		"oxfmt": "catalog:",
-		"oxlint": "catalog:"
+		"oxlint": "catalog:",
+		"oxlint-tsgolint": "catalog:"
 	}
 }

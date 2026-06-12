@@ -23,55 +23,20 @@ function RouteComponent() {
 	const navigate = useNavigate();
 	const form = useForm<SignUpBody>({ resolver: standardSchemaResolver(signUpBodySchema) });
 
-	const onSubmit = form.handleSubmit(async (data) => {
+	async function onValid(data: SignUpBody) {
 		await apiClient.auth.signUp(data);
 		await navigate({ to: "/sign-in" });
-	});
+	}
+
+	const onSubmit = form.handleSubmit(onValid);
 
 	return (
 		<div>
 			<FormProvider {...form}>
 				<Form className="mx-auto space-y-5 p-6" onSubmit={onSubmit}>
-					<InputColumns>
-						<InputGroup>
-							<Label htmlFor="firstName">First Name</Label>
-							<Input
-								id="firstName"
-								placeholder="First Name"
-								type="text"
-								autoComplete="given-name"
-								name="firstName"
-							/>
-							<InputError name="firstName" />
-						</InputGroup>
-						<InputGroup>
-							<Label htmlFor="lastName">Last Name</Label>
-							<Input
-								id="lastName"
-								placeholder="Last Name"
-								type="text"
-								autoComplete="family-name"
-								name="lastName"
-							/>
-							<InputError name="lastName" />
-						</InputGroup>
-					</InputColumns>
-					<InputGroup>
-						<Label htmlFor="email">Email</Label>
-						<Input id="email" placeholder="Email" type="email" autoComplete="email" name="email" />
-						<InputError name="email" />
-					</InputGroup>
-					<InputGroup>
-						<Label htmlFor="password">Password</Label>
-						<Input
-							id="password"
-							placeholder="Password"
-							type="password"
-							autoComplete="new-password"
-							name="password"
-						/>
-						<InputError name="password" />
-					</InputGroup>
+					<NameFields />
+					<EmailField />
+					<PasswordField />
 					<Button
 						type="submit"
 						disabled={form.formState.isSubmitting}
@@ -84,5 +49,60 @@ function RouteComponent() {
 				</Form>
 			</FormProvider>
 		</div>
+	);
+}
+
+function NameFields() {
+	return (
+		<InputColumns>
+			<InputGroup>
+				<Label htmlFor="firstName">First Name</Label>
+				<Input
+					id="firstName"
+					placeholder="First Name"
+					type="text"
+					autoComplete="given-name"
+					name="firstName"
+				/>
+				<InputError name="firstName" />
+			</InputGroup>
+			<InputGroup>
+				<Label htmlFor="lastName">Last Name</Label>
+				<Input
+					id="lastName"
+					placeholder="Last Name"
+					type="text"
+					autoComplete="family-name"
+					name="lastName"
+				/>
+				<InputError name="lastName" />
+			</InputGroup>
+		</InputColumns>
+	);
+}
+
+function EmailField() {
+	return (
+		<InputGroup>
+			<Label htmlFor="email">Email</Label>
+			<Input id="email" placeholder="Email" type="email" autoComplete="email" name="email" />
+			<InputError name="email" />
+		</InputGroup>
+	);
+}
+
+function PasswordField() {
+	return (
+		<InputGroup>
+			<Label htmlFor="password">Password</Label>
+			<Input
+				id="password"
+				placeholder="Password"
+				type="password"
+				autoComplete="new-password"
+				name="password"
+			/>
+			<InputError name="password" />
+		</InputGroup>
 	);
 }

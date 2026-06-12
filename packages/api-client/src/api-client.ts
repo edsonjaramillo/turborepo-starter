@@ -8,8 +8,8 @@ import { AuthAPI } from "./apis/auth-api";
 import { UsersAPI } from "./apis/users-api";
 import { APIClientError } from "./errors";
 
-type RequestResult<T> = Promise<{
-	body: JSendSuccess<T> | JSendError | unknown;
+type RequestResult = Promise<{
+	body: unknown;
 	status: number;
 }>;
 
@@ -30,7 +30,7 @@ export class APIClient {
 		this.auth = new AuthAPI(this);
 	}
 
-	async request<T>(request: RequestResult<T>): Promise<T> {
+	async request<T>(request: RequestResult): Promise<T> {
 		const { body, status } = await request;
 
 		if (!isJSendResponse<T>(body)) {
@@ -68,7 +68,7 @@ export class APIClient {
 }
 
 function isJSendResponse<T>(body: unknown): body is JSendSuccess<T> | JSendError {
-	if (!body || typeof body !== "object" || !("status" in body)) {
+	if (body === null || typeof body !== "object" || !("status" in body)) {
 		return false;
 	}
 

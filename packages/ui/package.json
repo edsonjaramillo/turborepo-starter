@@ -11,13 +11,12 @@
 		"check-types": "tsgo --noEmit",
 		"format": "oxfmt .",
 		"format:check": "oxfmt --check .",
-		"lint": "oxlint src --max-warnings 0",
-		"lint:fix": "oxlint src --fix"
+		"lint": "oxlint --type-aware --type-check src --max-warnings 0",
+		"lint:fix": "oxlint --type-aware --type-check src --fix"
 	},
 	"dependencies": {
 		"@repo/api-client": "workspace:*",
 		"@tanstack/react-query": "catalog:",
-		"@tanstack/react-router": "catalog:",
 		"class-variance-authority": "^0.7.1",
 		"react": "catalog:",
 		"react-dom": "catalog:",
@@ -32,6 +31,7 @@
 		"@types/react-dom": "catalog:",
 		"@typescript/native-preview": "catalog:",
 		"oxfmt": "catalog:",
-		"oxlint": "catalog:"
+		"oxlint": "catalog:",
+		"oxlint-tsgolint": "catalog:"
 	}
 }

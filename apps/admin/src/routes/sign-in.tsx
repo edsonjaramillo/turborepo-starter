@@ -1,10 +1,9 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { signInBodySchema, type SignInBody } from "@repo/contracts/auth-contracts";
-import { authSessionQueryOptions, refreshAuthSession } from "@repo/ui/auth-query";
+import { authSessionQueryOptions } from "@repo/ui/auth-query";
 import { Button } from "@repo/ui/button";
 import { Form } from "@repo/ui/form";
 import { Input, InputError, InputGroup, Label } from "@repo/ui/inputs";
-import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -20,8 +19,11 @@ export const Route = createFileRoute("/sign-in")({
 	component: RouteComponent,
 });
 
+async function onValid(data: SignInBody) {
+	await apiClient.auth.signIn(data);
+}
+
 function RouteComponent() {
-	const queryClient = useQueryClient();
 	const form = useForm<SignInBody>({
 		resolver: standardSchemaResolver(signInBodySchema),
 		defaultValues: {
@@ -30,31 +32,14 @@ function RouteComponent() {
 		},
 	});
 
-	const onSubmit = form.handleSubmit(async (data) => {
-		await apiClient.auth.signIn(data);
-		await refreshAuthSession(queryClient, apiClient);
-	});
+	const onSubmit = form.handleSubmit(onValid);
 
 	return (
 		<div>
 			<FormProvider {...form}>
 				<Form className="mx-auto space-y-5 p-6" onSubmit={onSubmit}>
-					<InputGroup>
-						<Label htmlFor="email">Email</Label>
-						<Input id="email" placeholder="Email" type="email" autoComplete="email" name="email" />
-						<InputError name="email" />
-					</InputGroup>
-					<InputGroup>
-						<Label htmlFor="password">Password</Label>
-						<Input
-							id="password"
-							placeholder="Password"
-							type="password"
-							autoComplete="current-password"
-							name="password"
-						/>
-						<InputError name="password" />
-					</InputGroup>
+					<EmailInput />
+					<PasswordInput />
 					<Button
 						type="submit"
 						disabled={form.formState.isSubmitting}
@@ -67,5 +52,31 @@ function RouteComponent() {
 				</Form>
 			</FormProvider>
 		</div>
+	);
+}
+
+function EmailInput() {
+	return (
+		<InputGroup>
+			<Label htmlFor="email">Email</Label>
+			<Input id="email" placeholder="Email" type="email" autoComplete="email" name="email" />
+			<InputError name="email" />
+		</InputGroup>
+	);
+}
+
+function PasswordInput() {
+	return (
+		<InputGroup>
+			<Label htmlFor="password">Password</Label>
+			<Input
+				id="password"
+				placeholder="Password"
+				type="password"
+				autoComplete="current-password"
+				name="password"
+			/>
+			<InputError name="password" />
+		</InputGroup>
 	);
 }

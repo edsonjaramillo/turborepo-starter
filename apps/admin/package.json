@@ -15,8 +15,8 @@
 		"start": "bun --bun vite start",
 		"format": "oxfmt .",
 		"format:check": "oxfmt --check .",
-		"lint": "oxlint src vite.config.ts --max-warnings 0",
-		"lint:fix": "oxlint src vite.config.ts --fix"
+		"lint": "oxlint --type-aware --type-check src vite.config.ts --max-warnings 0",
+		"lint:fix": "oxlint --type-aware --type-check src vite.config.ts --fix"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "catalog:",
@@ -51,6 +51,7 @@
 		"@vitejs/plugin-react": "catalog:",
 		"oxfmt": "catalog:",
 		"oxlint": "catalog:",
+		"oxlint-tsgolint": "catalog:",
 		"vite": "catalog:"
 	}
 }

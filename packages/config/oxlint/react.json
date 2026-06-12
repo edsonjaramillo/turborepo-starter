@@ -1,5 +1,6 @@
 {
 	"$schema": "../../../node_modules/oxlint/configuration_schema.json",
+	"extends": ["./library.json"],
 	"plugins": [
 		"import",
 		"jsx-a11y",
@@ -12,9 +13,11 @@
 		"unicorn"
 	],
 	"categories": {
-		"correctness": "error"
+		"correctness": "error",
+		"pedantic": "error",
+		"suspicious": "error"
 	},
 	"rules": {
-		"no-unused-vars": "error"
+		"react/react-in-jsx-scope": "off"
 	}
 }

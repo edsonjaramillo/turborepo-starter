@@ -109,9 +109,9 @@ export function InputError({
 
 	const error = errors?.[name];
 	const errorMessage = error?.message;
-	const message = errorMessage ? errorMessage.toString() : "";
+	const message = typeof errorMessage === "string" ? errorMessage : "";
 
-	if (!message) {
+	if (message.length === 0) {
 		return null;
 	}
 

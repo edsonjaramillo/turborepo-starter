@@ -7,10 +7,10 @@ const hashOptions: argon2.Options = {
 	parallelism: 4,
 };
 
-export async function hashPassword(password: string) {
-	return await argon2.hash(password, hashOptions);
+export function hashPassword(password: string) {
+	return argon2.hash(password, hashOptions);
 }
 
-export async function verifyPassword(hash: string, password: string) {
-	return await argon2.verify(hash, password, hashOptions);
+export function verifyPassword(hash: string, password: string) {
+	return argon2.verify(hash, password, hashOptions);
 }

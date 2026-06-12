@@ -14,8 +14,8 @@
 		"start": "infisical run -- bun dist/index.js",
 		"format": "oxfmt .",
 		"format:check": "oxfmt --check .",
-		"lint": "oxlint src --max-warnings 0",
-		"lint:fix": "oxlint src --fix"
+		"lint": "oxlint --type-aware --type-check src --max-warnings 0",
+		"lint:fix": "oxlint --type-aware --type-check src --fix"
 	},
 	"dependencies": {
 		"@fastify/cookie": "^11.0.2",
@@ -35,6 +35,7 @@
 		"@types/node": "catalog:",
 		"@typescript/native-preview": "catalog:",
 		"oxfmt": "catalog:",
-		"oxlint": "catalog:"
+		"oxlint": "catalog:",
+		"oxlint-tsgolint": "catalog:"
 	}
 }

@@ -68,7 +68,7 @@ interface AvatarMenuProps {
 export function AuthAvatar({ apiClient, menuLinks, signInTo = "/sign-in" }: AuthAvatarProps) {
 	const sessionQuery = useAuthSession(apiClient);
 	const signOutMutation = useSignOut(apiClient);
-	const menuItems = menuLinks.map(createRouterMenuItem);
+	const menuItems = menuLinks.map((menuLink) => createRouterMenuItem(menuLink));
 	const signInItem = createRouterMenuItem({ to: signInTo, label: "Sign In" });
 
 	return (
@@ -142,7 +142,10 @@ export function Avatar({
 
 function AvatarTrigger({ id, isOpen, isSessionPending, onClick, user }: AvatarTriggerProps) {
 	const userName = user ? getUserName(user) : undefined;
-	const ariaLabel = userName ? `Open account menu for ${userName}` : "Open account menu";
+	const ariaLabel =
+		userName !== undefined && userName.length > 0
+			? `Open account menu for ${userName}`
+			: "Open account menu";
 
 	return (
 		<button

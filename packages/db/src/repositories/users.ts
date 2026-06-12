@@ -11,8 +11,8 @@ interface CreateUserInput {
 
 export function createUsersRepository(db: Database) {
 	return {
-		async list(pagination: PaginationInput) {
-			return await db.query.usersTable.findMany({
+		list(pagination: PaginationInput) {
+			return db.query.usersTable.findMany({
 				columns: {
 					id: true,
 					firstName: true,
@@ -23,8 +23,8 @@ export function createUsersRepository(db: Database) {
 			});
 		},
 
-		async getByEmail(email: string) {
-			return await db.query.usersTable.findFirst({
+		getByEmail(email: string) {
+			return db.query.usersTable.findFirst({
 				where: { email },
 				columns: { passwordHash: true },
 			});
@@ -35,10 +35,6 @@ export function createUsersRepository(db: Database) {
 				where: { email },
 				columns: { id: true, firstName: true, lastName: true, email: true, passwordHash: true },
 			});
-
-			if (!user) {
-				return;
-			}
 
 			return user;
 		},

@@ -34,10 +34,7 @@ export function DesktopNavigation() {
 						</Link>
 					))}
 				</div>
-				<AuthAvatar
-					apiClient={apiClient}
-					menuLinks={links.map((link) => ({ to: link.href, label: link.name }))}
-				/>
+				<AuthAvatar apiClient={apiClient} menuLinks={[]} />
 			</div>
 		</div>
 	);

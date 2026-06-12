@@ -5,15 +5,15 @@ import { sessionsTable } from "../schema/sessions";
 
 export function createSessionsRepository(db: Database) {
 	return {
-		async getById(sessionId: string) {
-			return await db.query.sessionsTable.findFirst({
+		getById(sessionId: string) {
+			return db.query.sessionsTable.findFirst({
 				where: { id: sessionId },
 				columns: { id: true, expiresAt: true },
 			});
 		},
 
-		async getSignInProfileById(sessionId: string) {
-			return await db.query.sessionsTable.findFirst({
+		getSignInProfileById(sessionId: string) {
+			return db.query.sessionsTable.findFirst({
 				where: { id: sessionId },
 				columns: { id: true, expiresAt: true },
 				with: {
@@ -26,9 +26,6 @@ export function createSessionsRepository(db: Database) {
 
 		async create(userId: string, expiresAt: Date) {
 			const [session] = await db.insert(sessionsTable).values({ userId, expiresAt }).returning();
-			if (!session) {
-				return;
-			}
 			return session;
 		},
 
@@ -38,9 +35,6 @@ export function createSessionsRepository(db: Database) {
 				.set({ expiresAt })
 				.where(eq(sessionsTable.id, sessionId))
 				.returning();
-			if (!session) {
-				return;
-			}
 			return session;
 		},
 

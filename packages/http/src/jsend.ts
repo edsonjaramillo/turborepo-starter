@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Schema factory for success responses
-export function JSendSuccessSchema<T extends z.ZodTypeAny>(
+export function JSendSuccessSchema<T extends z.ZodType>(
 	payload: T,
 ): z.ZodObject<{
 	status: z.ZodLiteral<"success">;
@@ -16,7 +16,7 @@ export function JSendSuccessSchema<T extends z.ZodTypeAny>(
 }
 
 // Schema factory for info responses
-export function JSendInfoSchema<T extends z.ZodTypeAny>(
+export function JSendInfoSchema<T extends z.ZodType>(
 	payload: T,
 ): z.ZodObject<{
 	status: z.ZodLiteral<"info">;
