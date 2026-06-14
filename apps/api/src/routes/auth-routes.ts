@@ -12,7 +12,6 @@ const sessionDurationMs = 1000 * 60 * 60 * 24;
 
 export const authRouter = {
 	signIn: async ({ body, reply }) => {
-		console.log("Attempting to sign in user with email:", body.email);
 		const user = await database.users.getSignInProfileByEmail(body.email);
 
 		const passwordHash = user?.passwordHash ?? apiEnv.DUMMY_PASSWORD_HASH;

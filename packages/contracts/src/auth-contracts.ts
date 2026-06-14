@@ -7,10 +7,8 @@ import { z } from "zod";
 const c = initContract();
 
 export const signInResponseSchema = z.object({ firstName: zString, lastName: zString });
-export type SignInResponse = z.infer<typeof signInResponseSchema>;
 
 export const reSignInResponseSchema = z.object({ name: zString });
-export type ReSignInResponse = z.infer<typeof reSignInResponseSchema>;
 
 export const signUpBodySchema = z.object({
 	firstName: zString,
@@ -24,7 +22,6 @@ export const signInBodySchema = z.object({ email: zEmail, password: zPassword })
 export type SignUpBody = z.infer<typeof signUpBodySchema>;
 
 export const emptyResponseSchema = z.object({});
-export type EmptyResponse = z.infer<typeof emptyResponseSchema>;
 
 export const authContract = c.router({
 	signIn: {

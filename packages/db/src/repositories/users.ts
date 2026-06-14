@@ -33,7 +33,7 @@ export function createUsersRepository(db: Database) {
 		},
 
 		async create(user: CreateUserInput) {
-			await db.insert(usersTable).values({ ...user, email: user.email });
+			await db.insert(usersTable).values(user);
 		},
 	};
 }

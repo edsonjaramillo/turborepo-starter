@@ -4,8 +4,14 @@
 	"version": "0.0.0",
 	"private": true,
 	"exports": {
-		"./theme.css": "./src/theme.css",
-		"./*": "./src/*.tsx"
+		"./avatar": "./src/avatar.tsx",
+		"./button": "./src/button.tsx",
+		"./cn": "./src/lib/cn.ts",
+		"./form": "./src/form.tsx",
+		"./inputs": "./src/inputs.tsx",
+		"./skeleton": "./src/skeleton.tsx",
+		"./text": "./src/text.tsx",
+		"./theme.css": "./src/theme.css"
 	},
 	"scripts": {
 		"check-types": "tsgo --noEmit",

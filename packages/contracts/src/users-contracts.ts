@@ -10,7 +10,6 @@ const c = initContract();
 export const userResponseSchema = z.array(
 	z.object({ id: zString, firstName: zString, lastName: zString }),
 );
-export type UserResponse = z.infer<typeof userResponseSchema>;
 
 export const usersContract = c.router(
 	{

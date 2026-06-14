@@ -67,7 +67,6 @@ function AvatarMenu({
 	sessionContext,
 	authorizedLinks,
 }: AvatarMenuProps) {
-	console.log("isAuthenticated", sessionContext.isAuthenticated);
 	return (
 		<div
 			className={cn(
