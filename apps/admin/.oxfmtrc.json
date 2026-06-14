@@ -5,6 +5,7 @@
 	"ignorePatterns": ["**/*.gen.ts"],
 	"sortImports": true,
 	"sortPackageJson": true,
+	"bracketSameLine": true,
 	"sortTailwindcss": {
 		"stylesheet": "./node_modules/@repo/ui/src/theme.css",
 		"functions": ["cn", "twMerge"]

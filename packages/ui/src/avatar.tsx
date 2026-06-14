@@ -41,8 +41,7 @@ export function Avatar({
 			<button
 				type="button"
 				className="flex size-10 items-center justify-center rounded-full bg-black text-white"
-				onClick={avatarDisclosureContext.toggle}
-			>
+				onClick={avatarDisclosureContext.toggle}>
 				<span>{firstLetter.toUpperCase()}</span>
 			</button>
 			<AvatarMenu
@@ -73,8 +72,7 @@ function AvatarMenu({
 			className={cn(
 				"absolute top-11 right-0 border bg-white p-4 opacity-0 transition-opacity duration-base",
 				avatarDisclosureContext.isOpen && "opacity-100",
-			)}
-		>
+			)}>
 			<ul>
 				{sessionContext.isAuthenticated &&
 					authorizedLinks.map((link) => (
@@ -96,8 +94,7 @@ function AvatarMenu({
 							sessionContext.clearSession();
 						}
 						avatarDisclosureContext.close();
-					}}
-				>
+					}}>
 					Sign Out
 				</Button>
 			)}
@@ -105,8 +102,7 @@ function AvatarMenu({
 				<Link
 					to="/sign-in"
 					className={buttonVariants({ color: "success" })}
-					onClick={avatarDisclosureContext.close}
-				>
+					onClick={avatarDisclosureContext.close}>
 					Sign In
 				</Link>
 			)}
@@ -134,8 +130,7 @@ function UserCircleIcon({
 					viewBox="0 0 24 24"
 					fill="currentColor"
 					className={style}
-					aria-hidden
-				>
+					aria-hidden>
 					<path
 						fillRule="evenodd"
 						d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"

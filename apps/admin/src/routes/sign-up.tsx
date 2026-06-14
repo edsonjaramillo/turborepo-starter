@@ -35,8 +35,7 @@ function RouteComponent() {
 						disabled={form.formState.isSubmitting}
 						width="fit"
 						color="primary"
-						className="ml-auto"
-					>
+						className="ml-auto">
 						{form.formState.isSubmitting ? "Submitting..." : "Sign Up"}
 					</Button>
 				</Form>

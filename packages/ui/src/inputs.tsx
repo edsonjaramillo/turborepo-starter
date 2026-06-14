@@ -121,8 +121,7 @@ export function InputError({
 			className={cn("line-clamp-1 font-semibold", className)}
 			size="sm"
 			tone="danger"
-			{...props}
-		>
+			{...props}>
 			{message}
 		</Text>
 	);
