@@ -4,8 +4,7 @@ import { create } from "zustand";
 export type SessionContext = ReturnType<typeof createSessionStore>;
 
 export interface SessionUser {
-	firstName: string;
-	lastName: string;
+	name: string;
 }
 
 interface AuthenticatedState {
@@ -38,10 +37,7 @@ export function createSessionStore(): UseBoundStore<StoreApi<SessionStore>> {
 			});
 		},
 		clearSession() {
-			set({
-				user: undefined,
-				isAuthenticated: false,
-			});
+			set({ user: undefined, isAuthenticated: false });
 		},
 	}));
 }

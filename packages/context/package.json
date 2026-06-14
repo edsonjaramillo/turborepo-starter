@@ -5,7 +5,9 @@
 	"private": true,
 	"type": "module",
 	"exports": {
-		"./*": "./src/*.ts"
+		"./disclosure": "./src/disclosure.ts",
+		"./session": "./src/session.ts",
+		"./session-watcher": "./src/session-watcher.tsx"
 	},
 	"scripts": {
 		"check-types": "tsgo --noEmit",
@@ -15,11 +17,16 @@
 		"lint:fix": "oxlint --type-aware --type-check src --fix"
 	},
 	"dependencies": {
+		"@repo/contracts": "workspace:*",
+		"react": "catalog:",
+		"react-dom": "catalog:",
 		"zustand": "^5.0.13"
 	},
 	"devDependencies": {
 		"@repo/config": "workspace:*",
 		"@types/node": "catalog:",
+		"@types/react": "catalog:",
+		"@types/react-dom": "catalog:",
 		"@typescript/native-preview": "catalog:",
 		"oxfmt": "catalog:",
 		"oxlint": "catalog:",

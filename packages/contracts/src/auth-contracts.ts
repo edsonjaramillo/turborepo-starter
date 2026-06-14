@@ -12,8 +12,8 @@ export const signInResponseSchema = z.object({
 });
 export type SignInResponse = z.infer<typeof signInResponseSchema>;
 
-export const reSignInResponseSchema = signInResponseSchema.extend({
-	email: zEmail,
+export const reSignInResponseSchema = z.object({
+	name: zString,
 });
 export type ReSignInResponse = z.infer<typeof reSignInResponseSchema>;
 

@@ -17,6 +17,10 @@ export const buttonVariants = cva(
 			color: {
 				primary:
 					"bg-primary text-white not-disabled:hover:bg-primary-hover not-disabled:focus:bg-primary-hover not-disabled:active:bg-primary-pressed",
+				danger:
+					"bg-danger text-white not-disabled:hover:bg-danger-hover not-disabled:focus:bg-danger-hover not-disabled:active:bg-danger-pressed",
+				success:
+					"bg-success text-white not-disabled:hover:bg-success-hover not-disabled:focus:bg-success-hover not-disabled:active:bg-success-pressed",
 			},
 			disabled: { true: "cursor-not-allowed bg-muted text-black" },
 			width: { fit: "w-fit", full: "w-full" },

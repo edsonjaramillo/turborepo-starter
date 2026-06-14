@@ -1,17 +1,12 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import type { QueryClient } from "@tanstack/react-query";
-import { HeadContent, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
+import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import { DesktopNavigation } from "#/components/desktop-navigation-admin";
+import { Desktop } from "#/components/admin-desktop.js";
 
 import adminCss from "../admin.css?url";
 
-interface RouterContext {
-	queryClient: QueryClient;
-}
-
-export const Route = createRootRouteWithContext<RouterContext>()({
+export const Route = createRootRoute({
 	head: () => ({
 		meta: [
 			{ charSet: "utf-8" },
@@ -34,7 +29,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<HeadContent />
 			</head>
 			<body>
-				<DesktopNavigation />
+				<Desktop />
 				{children}
 				<TanStackDevtools
 					config={{ position: "bottom-right" }}

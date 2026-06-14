@@ -1,29 +1,21 @@
-import { paginationSchema, type PaginationSchema } from "@repo/validation/pagination";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { paginationSchema } from "@repo/validation/pagination";
 import { createFileRoute } from "@tanstack/react-router";
 import { zodValidator } from "@tanstack/zod-adapter";
 
-import { apiClient } from "#/lib/admin-api-client";
-
-function usersQueryOptions(pagination: PaginationSchema) {
-	return queryOptions({
-		queryKey: ["users", pagination],
-		queryFn: () => apiClient.users.list(pagination),
-	});
-}
+import { apiClient } from "#/lib/api-client";
 
 export const Route = createFileRoute("/users")({
 	component: RouteComponent,
 	validateSearch: zodValidator(paginationSchema),
 	loaderDeps: ({ search: { page, limit } }) => ({ page, limit }),
-	loader: ({ context, deps }) => {
-		return context.queryClient.ensureQueryData(usersQueryOptions(deps));
+	loader: async ({ deps }) => {
+		const { body } = await apiClient.users.list({ query: deps });
+		return body.payload;
 	},
 });
 
 function RouteComponent() {
-	const pagination = Route.useLoaderDeps();
-	const { data: users } = useSuspenseQuery(usersQueryOptions(pagination));
+	const users = Route.useLoaderData();
 
 	return (
 		<div>

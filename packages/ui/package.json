@@ -15,8 +15,9 @@
 		"lint:fix": "oxlint --type-aware --type-check src --fix"
 	},
 	"dependencies": {
-		"@repo/api-client": "workspace:*",
-		"@tanstack/react-query": "catalog:",
+		"@repo/context": "workspace:*",
+		"@repo/contracts": "workspace:*",
+		"@tanstack/react-router": "catalog:",
 		"class-variance-authority": "^0.7.1",
 		"react": "catalog:",
 		"react-dom": "catalog:",

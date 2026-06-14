@@ -1,29 +1,22 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { signInBodySchema, type SignInBody } from "@repo/contracts/auth-contracts";
-import { authSessionQueryOptions } from "@repo/ui/auth-query";
 import { Button } from "@repo/ui/button";
 import { Form } from "@repo/ui/form";
 import { Input, InputError, InputGroup, Label } from "@repo/ui/inputs";
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { apiClient } from "#/lib/admin-api-client";
+import { useSessionContext } from "#/context/admin-context";
+import { apiClient } from "#/lib/api-client";
 
 export const Route = createFileRoute("/sign-in")({
-	beforeLoad: async ({ context }) => {
-		const session = await context.queryClient.ensureQueryData(authSessionQueryOptions(apiClient));
-		if (session) {
-			throw redirect({ to: "/" });
-		}
-	},
 	component: RouteComponent,
 });
 
-async function onValid(data: SignInBody) {
-	await apiClient.auth.signIn(data);
-}
-
 function RouteComponent() {
+	const navigate = useNavigate();
+	const { setSession } = useSessionContext();
+
 	const form = useForm<SignInBody>({
 		resolver: standardSchemaResolver(signInBodySchema),
 		defaultValues: {
@@ -31,6 +24,14 @@ function RouteComponent() {
 			password: "abcd1234",
 		},
 	});
+
+	async function onValid(data: SignInBody) {
+		const { status, body } = await apiClient.auth.signIn({ body: data });
+		if (status === 200) {
+			setSession({ name: body.payload.firstName });
+		}
+		void navigate({ to: "/" });
+	}
 
 	const onSubmit = form.handleSubmit(onValid);
 

@@ -70,14 +70,7 @@ export const authRouter = {
 
 		return {
 			status: HttpStatus.OK,
-			body: JSend.success(
-				{
-					firstName: session.user.firstName,
-					lastName: session.user.lastName,
-					email: session.user.email,
-				},
-				"Session found successfully",
-			),
+			body: JSend.success({ name: session.user.firstName }, "Session found successfully"),
 		};
 	},
 	signOut: async ({ request, reply }) => {
