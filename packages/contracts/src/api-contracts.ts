@@ -5,10 +5,7 @@ import { usersContract } from "./users-contracts";
 
 const c = initContract();
 
-export const apiContract = c.router({
-	auth: authContract,
-	users: usersContract,
-});
+export const apiContract = c.router({ auth: authContract, users: usersContract });
 
 export function createAPIClient(baseUrl: string) {
 	return initClient(apiContract, {

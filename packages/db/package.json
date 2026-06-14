@@ -14,7 +14,7 @@
 	},
 	"scripts": {
 		"check-types": "tsgo --noEmit",
-		"generate": "infisical run -- drizzle-kit generate",
+		"generate": "drizzle-kit generate",
 		"migrate": "infisical run -- drizzle-kit migrate",
 		"push": "infisical run -- drizzle-kit push",
 		"seed": "infisical run -- bun src/seed.ts",

@@ -11,9 +11,6 @@ export const userRouter = {
 		const { pagination } = parsePagination({ query });
 		const users = await database.users.list(pagination);
 
-		return {
-			status: HttpStatus.OK,
-			body: JSend.success(users, "Got users"),
-		};
+		return { status: HttpStatus.OK, body: JSend.success(users, "Got users") };
 	},
 } satisfies RouterImplementation<typeof usersContract>;

@@ -16,11 +16,7 @@ export function createSessionsRepository(db: Database) {
 			return db.query.sessionsTable.findFirst({
 				where: { id: sessionId },
 				columns: { id: true, expiresAt: true },
-				with: {
-					user: {
-						columns: { firstName: true, lastName: true, email: true },
-					},
-				},
+				with: { user: { columns: { firstName: true, lastName: true, email: true } } },
 			});
 		},
 

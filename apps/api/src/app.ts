@@ -11,17 +11,11 @@ import { userRouter } from "./routes/users-routes";
 
 export const app = Fastify();
 
-await app.register(cors, {
-	origin: ["http://localhost:3000"],
-	credentials: true,
-});
+await app.register(cors, { origin: ["http://localhost:3000"], credentials: true });
 await app.register(cookie);
 
 const server = initServer();
-const router = server.router(apiContract, {
-	auth: authRouter,
-	users: userRouter,
-});
+const router = server.router(apiContract, { auth: authRouter, users: userRouter });
 
 await app.register(server.plugin(router), {
 	logInitialization: false,

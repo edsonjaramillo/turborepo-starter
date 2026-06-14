@@ -67,23 +67,25 @@ function AvatarMenu({
 	sessionContext,
 	authorizedLinks,
 }: AvatarMenuProps) {
+	console.log("isAuthenticated", sessionContext.isAuthenticated);
 	return (
 		<div
 			className={cn(
-				"absolute top-11 right-0 border bg-white p-4 opacity-0 transition-opacity duration-base",
+				"absolute top-12 right-0 border bg-white p-4 opacity-0 transition-opacity duration-base",
 				avatarDisclosureContext.isOpen && "opacity-100",
 			)}>
-			<ul>
-				{sessionContext.isAuthenticated &&
-					authorizedLinks.map((link) => (
+			{sessionContext.isAuthenticated && (
+				<ul>
+					{authorizedLinks.map((link) => (
 						<li key={link.to}>
-							<Link to={link.to} onClick={avatarDisclosureContext.close}>
+							<Link to={link.to} onClick={avatarDisclosureContext.close} className="text-white">
 								{link.label}
 							</Link>
 						</li>
 					))}
-			</ul>
-			<hr />
+				</ul>
+			)}
+			<hr className="py-1" />
 			{sessionContext.isAuthenticated && (
 				<Button
 					className={buttonVariants({ color: "danger" })}

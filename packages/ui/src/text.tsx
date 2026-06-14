@@ -48,10 +48,7 @@ type TextTag =
 	| "blockquote"
 	| "code";
 
-type TextOwnProps<T extends TextTag> = {
-	as?: T;
-	className?: string;
-} & TextVariants;
+type TextOwnProps<T extends TextTag> = { as?: T; className?: string } & TextVariants;
 
 export type TextProps<T extends TextTag = "p"> = TextOwnProps<T> &
 	Omit<ComponentPropsWithoutRef<T>, keyof TextOwnProps<T>>;

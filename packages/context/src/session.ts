@@ -31,10 +31,7 @@ export function createSessionStore(): UseBoundStore<StoreApi<SessionStore>> {
 		user: undefined,
 		isAuthenticated: false,
 		setSession(user) {
-			set({
-				user,
-				isAuthenticated: true,
-			});
+			set({ user, isAuthenticated: true });
 		},
 		clearSession() {
 			set({ user: undefined, isAuthenticated: false });

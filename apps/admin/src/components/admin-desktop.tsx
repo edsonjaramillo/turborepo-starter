@@ -6,14 +6,8 @@ import { useAvatarContext, useSessionContext } from "#/context/admin-context";
 import { apiClient } from "#/lib/api-client";
 
 const links = [
-	{
-		name: "Home",
-		href: "/",
-	},
-	{
-		name: "Users",
-		href: "/users",
-	},
+	{ name: "Home", href: "/" },
+	{ name: "Users", href: "/users" },
 ];
 
 export function Desktop() {

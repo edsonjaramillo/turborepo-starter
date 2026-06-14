@@ -9,14 +9,10 @@ export const nonZeroSchema = zString.regex(positiveNonZeroInteger, {
 
 export const paginationSchema = z.object({
 	limit: nonZeroSchema
-		.meta({
-			description: "Limit the number of items returned. Must be positive non-zero integer.",
-		})
+		.meta({ description: "Limit the number of items returned. Must be positive non-zero integer." })
 		.optional(),
 	page: nonZeroSchema
-		.meta({
-			description: "The page number to return. Must be positive non-zero integer.",
-		})
+		.meta({ description: "The page number to return. Must be positive non-zero integer." })
 		.optional(),
 });
 

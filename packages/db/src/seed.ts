@@ -17,56 +17,18 @@ interface SeedUser {
 }
 
 const users = [
-	{
-		firstName: "Edson",
-		lastName: "Jaramillo",
-		permissions: ["all"],
-	},
-	{
-		firstName: "Tony",
-		lastName: "Stark",
-		permissions: ["sessions:delete"],
-	},
-	{
-		firstName: "Steve",
-		lastName: "Rogers",
-	},
-	{
-		firstName: "Bruce",
-		lastName: "Banner",
-	},
-	{
-		firstName: "Natasha",
-		lastName: "Romanoff",
-	},
-	{
-		firstName: "Clint",
-		lastName: "Barton",
-	},
-	{
-		firstName: "Thor",
-		lastName: "Odinson",
-	},
-	{
-		firstName: "Wanda",
-		lastName: "Maximoff",
-	},
-	{
-		firstName: "Peter",
-		lastName: "Parker",
-	},
-	{
-		firstName: "Stephen",
-		lastName: "Strange",
-	},
-	{
-		firstName: "Eddie",
-		lastName: "Brock",
-	},
-	{
-		firstName: "Peter",
-		lastName: "Quill",
-	},
+	{ firstName: "Edson", lastName: "Jaramillo", permissions: ["all"] },
+	{ firstName: "Tony", lastName: "Stark", permissions: ["sessions:delete"] },
+	{ firstName: "Steve", lastName: "Rogers" },
+	{ firstName: "Bruce", lastName: "Banner" },
+	{ firstName: "Natasha", lastName: "Romanoff" },
+	{ firstName: "Clint", lastName: "Barton" },
+	{ firstName: "Thor", lastName: "Odinson" },
+	{ firstName: "Wanda", lastName: "Maximoff" },
+	{ firstName: "Peter", lastName: "Parker" },
+	{ firstName: "Stephen", lastName: "Strange" },
+	{ firstName: "Eddie", lastName: "Brock" },
+	{ firstName: "Peter", lastName: "Quill" },
 ] as const satisfies readonly SeedUser[];
 
 const database = createDb({

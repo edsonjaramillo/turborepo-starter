@@ -19,10 +19,7 @@ export const authRouter = {
 		const passwordMatches = await verifyPassword(passwordHash, body.password);
 
 		if (!user || !passwordMatches) {
-			return {
-				status: HttpStatus.UNAUTHORIZED,
-				body: JSend.error("Invalid email or password"),
-			};
+			return { status: HttpStatus.UNAUTHORIZED, body: JSend.error("Invalid email or password") };
 		}
 
 		const expiresAt = new Date(Date.now() + sessionDurationMs);
@@ -39,10 +36,7 @@ export const authRouter = {
 		return {
 			status: HttpStatus.OK,
 			body: JSend.success(
-				{
-					firstName: user.firstName,
-					lastName: user.lastName,
-				},
+				{ firstName: user.firstName, lastName: user.lastName },
 				"Session created successfully",
 			),
 		};
@@ -50,18 +44,12 @@ export const authRouter = {
 	reSignIn: async ({ request, reply }) => {
 		const sessionId = request.cookies.session;
 		if (typeof sessionId !== "string" || !sessionId) {
-			return {
-				status: HttpStatus.UNAUTHORIZED,
-				body: JSend.error("Session not found"),
-			};
+			return { status: HttpStatus.UNAUTHORIZED, body: JSend.error("Session not found") };
 		}
 
 		const session = await database.sessions.getSignInProfileById(sessionId);
 		if (!session || !session.user || session.expiresAt <= new Date()) {
-			return {
-				status: HttpStatus.UNAUTHORIZED,
-				body: JSend.error("Session not found"),
-			};
+			return { status: HttpStatus.UNAUTHORIZED, body: JSend.error("Session not found") };
 		}
 
 		const expiresAt = new Date(Date.now() + sessionDurationMs);
@@ -81,26 +69,17 @@ export const authRouter = {
 
 		reply.setCookie("session", "", createCookie(true, new Date(0)));
 
-		return {
-			status: HttpStatus.OK,
-			body: JSend.success({}, "Session ended successfully"),
-		};
+		return { status: HttpStatus.OK, body: JSend.success({}, "Session ended successfully") };
 	},
 	signUp: async ({ body }) => {
 		const existingUser = await database.users.getByEmail(body.email);
 		if (existingUser) {
-			return {
-				status: HttpStatus.CONFLICT,
-				body: JSend.error("User already exists."),
-			};
+			return { status: HttpStatus.CONFLICT, body: JSend.error("User already exists.") };
 		}
 
 		const passwordHash = await hashPassword(body.password);
 		await database.users.create({ ...body, passwordHash });
 
-		return {
-			status: HttpStatus.CREATED,
-			body: JSend.success({}, "User created succesfully."),
-		};
+		return { status: HttpStatus.CREATED, body: JSend.success({}, "User created succesfully.") };
 	},
 } satisfies RouterImplementation<typeof authContract>;

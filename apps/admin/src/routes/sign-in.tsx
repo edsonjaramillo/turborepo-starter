@@ -19,10 +19,7 @@ function RouteComponent() {
 
 	const form = useForm<SignInBody>({
 		resolver: standardSchemaResolver(signInBodySchema),
-		defaultValues: {
-			email: "edson.jaramillo@example.com",
-			password: "abcd1234",
-		},
+		defaultValues: { email: "edson.jaramillo@example.com", password: "abcd1234" },
 	});
 
 	async function onValid(data: SignInBody) {
@@ -39,8 +36,7 @@ function RouteComponent() {
 		<div>
 			<FormProvider {...form}>
 				<Form className="mx-auto space-y-5 p-6" onSubmit={onSubmit}>
-					<EmailInput />
-					<PasswordInput />
+					<EmailInput /> <PasswordInput />
 					<Button
 						type="submit"
 						disabled={form.formState.isSubmitting}

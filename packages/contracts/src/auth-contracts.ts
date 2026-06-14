@@ -6,15 +6,10 @@ import { z } from "zod";
 
 const c = initContract();
 
-export const signInResponseSchema = z.object({
-	firstName: zString,
-	lastName: zString,
-});
+export const signInResponseSchema = z.object({ firstName: zString, lastName: zString });
 export type SignInResponse = z.infer<typeof signInResponseSchema>;
 
-export const reSignInResponseSchema = z.object({
-	name: zString,
-});
+export const reSignInResponseSchema = z.object({ name: zString });
 export type ReSignInResponse = z.infer<typeof reSignInResponseSchema>;
 
 export const signUpBodySchema = z.object({
@@ -25,10 +20,7 @@ export const signUpBodySchema = z.object({
 });
 export type SignInBody = z.infer<typeof signInBodySchema>;
 
-export const signInBodySchema = z.object({
-	email: zEmail,
-	password: zPassword,
-});
+export const signInBodySchema = z.object({ email: zEmail, password: zPassword });
 export type SignUpBody = z.infer<typeof signUpBodySchema>;
 
 export const emptyResponseSchema = z.object({});
@@ -56,9 +48,7 @@ export const authContract = c.router({
 	signOut: {
 		method: "GET",
 		path: "/auth/sign-out",
-		responses: {
-			[HttpStatus.OK]: JSendSuccessSchema(emptyResponseSchema),
-		},
+		responses: { [HttpStatus.OK]: JSendSuccessSchema(emptyResponseSchema) },
 	},
 	signUp: {
 		method: "POST",

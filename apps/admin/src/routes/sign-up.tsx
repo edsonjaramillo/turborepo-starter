@@ -8,9 +8,7 @@ import { FormProvider, useForm } from "react-hook-form";
 
 import { apiClient } from "#/lib/api-client";
 
-export const Route = createFileRoute("/sign-up")({
-	component: RouteComponent,
-});
+export const Route = createFileRoute("/sign-up")({ component: RouteComponent });
 
 function RouteComponent() {
 	const navigate = useNavigate();
@@ -27,9 +25,7 @@ function RouteComponent() {
 		<div>
 			<FormProvider {...form}>
 				<Form className="mx-auto space-y-5 p-6" onSubmit={onSubmit}>
-					<NameFields />
-					<EmailField />
-					<PasswordField />
+					<NameFields /> <EmailField /> <PasswordField />
 					<Button
 						type="submit"
 						disabled={form.formState.isSubmitting}

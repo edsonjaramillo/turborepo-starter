@@ -15,20 +15,14 @@ export const relations = defineRelations(
 			}),
 		},
 		sessionsTable: {
-			user: r.one.usersTable({
-				from: r.sessionsTable.userId,
-				to: r.usersTable.id,
-			}),
+			user: r.one.usersTable({ from: r.sessionsTable.userId, to: r.usersTable.id }),
 		},
 		usersTable: {
 			permissions: r.many.permissionsTable({
 				from: r.usersTable.id.through(r.usersPermissionsTable.userId),
 				to: r.permissionsTable.id.through(r.usersPermissionsTable.permissionId),
 			}),
-			sessions: r.many.sessionsTable({
-				from: r.usersTable.id,
-				to: r.sessionsTable.userId,
-			}),
+			sessions: r.many.sessionsTable({ from: r.usersTable.id, to: r.sessionsTable.userId }),
 		},
 	}),
 );
