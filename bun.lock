@@ -188,6 +188,7 @@
         "react-hook-form": "catalog:",
         "tailwind-merge": "^3.6.0",
         "tailwindcss": "catalog:",
+        "zod": "catalog:",
       },
       "devDependencies": {
         "@repo/config": "workspace:*",

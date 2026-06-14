@@ -1,8 +1,9 @@
+import { NotFound } from "@repo/ui/not-found";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import { Desktop } from "#/components/admin-desktop.js";
+import { Desktop } from "#/components/admin-desktop";
 
 import adminCss from "../admin.css?url";
 
@@ -16,7 +17,7 @@ export const Route = createRootRoute({
 		links: [{ rel: "stylesheet", href: adminCss }],
 	}),
 	shellComponent: RootDocument,
-	notFoundComponent: () => <div className="text-2xl font-bold text-danger">Not Found</div>,
+	notFoundComponent: NotFound,
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {

@@ -9,12 +9,13 @@ export interface Pagination {
 const DEFAULT_LIMIT = 25;
 const DEFAULT_PAGE = 1;
 
-export function parsePagination({ query }: { query: unknown }): { pagination: Pagination } {
+type ParsePaginationInput = { query: { limit?: number; page?: number } };
+type ParsePaginationOutput = { pagination: Pagination };
+
+export function parsePagination({ query }: ParsePaginationInput): ParsePaginationOutput {
 	const parsedQuery = paginationSchema.parse(query);
-	const page =
-		parsedQuery.page === undefined ? DEFAULT_PAGE : Number.parseInt(parsedQuery.page, 10);
-	const limit =
-		parsedQuery.limit === undefined ? DEFAULT_LIMIT : Number.parseInt(parsedQuery.limit, 10);
+	const page = parsedQuery.page ?? DEFAULT_PAGE;
+	const limit = parsedQuery.limit ?? DEFAULT_LIMIT;
 
 	return { pagination: { page, limit, offset: (page - 1) * limit } };
 }

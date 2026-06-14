@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const zNodeEnv = z.enum(["development", "production"]);
-export const zCoerceNumber = z.coerce.number();
+export const zCoerceNumber = z.coerce.number({ message: "Must be a number" });
 export const zString = z.string();
 export const zName = zString.min(2, { message: "Name must be at least 2 characters long" });
 export const zDate = z.coerce.date();

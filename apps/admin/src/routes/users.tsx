@@ -1,4 +1,5 @@
 import { cn } from "@repo/ui/cn";
+import { ErrorComponent } from "@repo/ui/error-component";
 import { Skeleton } from "@repo/ui/skeleton";
 import { paginationSchema } from "@repo/validation/pagination";
 import { createFileRoute } from "@tanstack/react-router";
@@ -14,6 +15,7 @@ export const Route = createFileRoute("/users")({
 	loader: ({ deps }) => ({
 		usersPromise: apiClient.users.list({ query: deps }).then((res) => res.body.payload),
 	}),
+	errorComponent: ({ error }) => <ErrorComponent error={error} />,
 });
 
 function RouteComponent() {

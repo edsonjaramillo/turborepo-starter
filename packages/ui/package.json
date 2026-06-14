@@ -7,8 +7,10 @@
 		"./avatar": "./src/avatar.tsx",
 		"./button": "./src/button.tsx",
 		"./cn": "./src/lib/cn.ts",
+		"./error-component": "./src/error-component.tsx",
 		"./form": "./src/form.tsx",
 		"./inputs": "./src/inputs.tsx",
+		"./not-found": "./src/not-found.tsx",
 		"./skeleton": "./src/skeleton.tsx",
 		"./text": "./src/text.tsx",
 		"./theme.css": "./src/theme.css"
@@ -29,7 +31,8 @@
 		"react-dom": "catalog:",
 		"react-hook-form": "catalog:",
 		"tailwind-merge": "^3.6.0",
-		"tailwindcss": "catalog:"
+		"tailwindcss": "catalog:",
+		"zod": "catalog:"
 	},
 	"devDependencies": {
 		"@repo/config": "workspace:*",
