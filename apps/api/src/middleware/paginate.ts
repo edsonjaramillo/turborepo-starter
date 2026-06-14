@@ -9,10 +9,9 @@ export interface Pagination {
 const DEFAULT_LIMIT = 25;
 const DEFAULT_PAGE = 1;
 
-type ParsePaginationInput = { query: { limit?: number; page?: number } };
-type ParsePaginationOutput = { pagination: Pagination };
+type ParsedPagination = { pagination: Pagination };
 
-export function parsePagination({ query }: ParsePaginationInput): ParsePaginationOutput {
+export function parsePagination(query: unknown): ParsedPagination {
 	const parsedQuery = paginationSchema.parse(query);
 	const page = parsedQuery.page ?? DEFAULT_PAGE;
 	const limit = parsedQuery.limit ?? DEFAULT_LIMIT;

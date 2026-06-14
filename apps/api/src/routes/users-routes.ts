@@ -8,7 +8,7 @@ import { parsePagination } from "../middleware/paginate";
 
 export const userRouter = {
 	list: async ({ query }) => {
-		const { pagination } = parsePagination({ query });
+		const { pagination } = parsePagination(query);
 		const users = await database.users.list(pagination);
 
 		return { status: HttpStatus.OK, body: JSend.success(users, "Got users") };
