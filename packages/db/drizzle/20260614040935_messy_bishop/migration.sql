@@ -9,7 +9,7 @@ CREATE TABLE "sessions" (
 	"id" uuid PRIMARY KEY,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
-	"user_id" uuid NOT NULL UNIQUE,
+	"user_id" uuid NOT NULL,
 	"expires_at" timestamp with time zone NOT NULL
 );
 --> statement-breakpoint
