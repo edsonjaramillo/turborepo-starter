@@ -6,8 +6,8 @@ import { HttpStatus } from "@repo/http/status-codes";
 import { initServer, RequestValidationError } from "@ts-rest/fastify";
 import Fastify from "fastify";
 
-import { authRouter } from "./routes/auth-routes";
-import { userRouter } from "./routes/users-routes";
+import { authRouter } from "./routes/auth-router";
+import { userRouter } from "./routes/users-router";
 
 export const app = Fastify();
 
