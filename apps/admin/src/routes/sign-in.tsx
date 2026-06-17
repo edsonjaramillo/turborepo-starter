@@ -24,10 +24,11 @@ function RouteComponent() {
 
 	async function onValid(data: SignInBody) {
 		const { status, body } = await apiClient.auth.signIn({ body: data });
+		console.log({ status, body });
 		if (status === 200) {
 			setSession({ name: body.payload.firstName });
+			void navigate({ to: "/" });
 		}
-		void navigate({ to: "/" });
 	}
 
 	const onSubmit = form.handleSubmit(onValid);

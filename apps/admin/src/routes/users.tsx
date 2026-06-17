@@ -2,18 +2,31 @@ import { cn } from "@repo/ui/cn";
 import { ErrorComponent } from "@repo/ui/error-component";
 import { Skeleton } from "@repo/ui/skeleton";
 import { paginationSchema } from "@repo/validation/pagination";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { zodValidator } from "@tanstack/zod-adapter";
 import { Suspense, use } from "react";
 
 import { apiClient } from "#/lib/api-client";
+
+type UsersResponse = Awaited<ReturnType<typeof apiClient.users.list>>;
+type Users = Extract<UsersResponse, { status: 200 }>["body"]["payload"];
 
 export const Route = createFileRoute("/users")({
 	component: RouteComponent,
 	validateSearch: zodValidator(paginationSchema),
 	loaderDeps: ({ search: { page, limit } }) => ({ page, limit }),
 	loader: ({ deps }) => ({
-		usersPromise: apiClient.users.list({ query: deps }).then((res) => res.body.payload),
+		usersPromise: apiClient.users.list({ query: deps }).then((response) => {
+			if (response.status === 401) {
+				throw redirect({ to: "/unauthorized" });
+			}
+
+			if (response.status === 403) {
+				throw redirect({ to: "/forbidden" });
+			}
+
+			return response.body.payload;
+		}),
 	}),
 	errorComponent: ({ error }) => <ErrorComponent error={error} />,
 });
@@ -33,7 +46,6 @@ function RouteComponent() {
 
 const cardStyle = cn("flex w-80 flex-col gap-4 border p-6");
 
-type Users = Awaited<ReturnType<typeof apiClient.users.list>>["body"]["payload"];
 function UsersList({ usersPromise }: { usersPromise: Promise<Users> }) {
 	const users = use(usersPromise);
 

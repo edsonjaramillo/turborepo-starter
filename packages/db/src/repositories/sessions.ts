@@ -1,15 +1,18 @@
-import { eq } from "drizzle-orm";
+import { and, gt, eq } from "drizzle-orm/pg-core/expressions";
 
 import type { Database } from "../client";
 import { sessionsTable } from "../schema/sessions";
 
 export function createSessionsRepository(db: Database) {
 	return {
-		getById(sessionId: string) {
-			return db.query.sessionsTable.findFirst({
-				where: { id: sessionId },
-				columns: { id: true, expiresAt: true },
-			});
+		async getById(sessionId: string) {
+			const [session] = await db
+				.select({ sessionId: sessionsTable.id, userId: sessionsTable.userId })
+				.from(sessionsTable)
+				.where(and(eq(sessionsTable.id, sessionId), gt(sessionsTable.expiresAt, new Date())))
+				.limit(1);
+
+			return session;
 		},
 
 		getSignInProfileById(sessionId: string) {

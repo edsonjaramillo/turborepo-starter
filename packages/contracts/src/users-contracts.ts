@@ -1,4 +1,4 @@
-import { JSendSuccessSchema } from "@repo/http/jsend";
+import { JSendErrorSchema, JSendSuccessSchema } from "@repo/http/jsend";
 import { HttpStatus } from "@repo/http/status-codes";
 import { zString } from "@repo/validation/core";
 import { paginationSchema } from "@repo/validation/pagination";
@@ -17,7 +17,11 @@ export const usersContract = c.router(
 			method: "GET",
 			path: "/users/",
 			query: paginationSchema,
-			responses: { [HttpStatus.OK]: JSendSuccessSchema(userResponseSchema) },
+			responses: {
+				[HttpStatus.UNAUTHORIZED]: JSendErrorSchema(),
+				[HttpStatus.FORBIDDEN]: JSendErrorSchema(),
+				[HttpStatus.OK]: JSendSuccessSchema(userResponseSchema),
+			},
 		},
 	},
 	{ strictStatusCodes: true },

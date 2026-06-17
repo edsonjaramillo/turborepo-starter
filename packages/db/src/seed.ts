@@ -2,13 +2,9 @@ import { hashPassword } from "@repo/security/password";
 
 import { createDb } from "./client";
 import { dbEnv } from "./env";
-import { permissionsTable } from "./schema/permissions";
+import { permissionNames, type PermissionName, permissionsTable } from "./schema/permissions";
 import { usersTable } from "./schema/users";
 import { usersPermissionsTable } from "./schema/users-permissions";
-
-const permissions = ["sessions:delete", "all"] as const;
-
-type PermissionName = (typeof permissions)[number];
 
 interface SeedUser {
 	firstName: string;
@@ -18,7 +14,7 @@ interface SeedUser {
 
 const users = [
 	{ firstName: "Edson", lastName: "Jaramillo", permissions: ["all"] },
-	{ firstName: "Tony", lastName: "Stark", permissions: ["sessions:delete"] },
+	{ firstName: "Tony", lastName: "Stark", permissions: ["users:read"] },
 	{ firstName: "Steve", lastName: "Rogers" },
 	{ firstName: "Bruce", lastName: "Banner" },
 	{ firstName: "Natasha", lastName: "Romanoff" },
@@ -45,7 +41,7 @@ async function seed() {
 
 	const createdPermissions = await database.db
 		.insert(permissionsTable)
-		.values(permissions.map((name) => ({ name })))
+		.values(permissionNames.map((name) => ({ name })))
 		.returning({ id: permissionsTable.id, name: permissionsTable.name });
 
 	const permissionIds = new Map(

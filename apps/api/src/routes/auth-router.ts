@@ -6,7 +6,7 @@ import type { RouterImplementation } from "@ts-rest/fastify";
 
 import { database } from "../api-db";
 import { apiEnv } from "../api-env";
-import { createCookie } from "../utils/cookies";
+import { createCookie, getCookie } from "../utils/cookies";
 
 const sessionDurationMs = 1000 * 60 * 60 * 24;
 
@@ -41,8 +41,8 @@ export const authRouter = {
 		};
 	},
 	reSignIn: async ({ request, reply }) => {
-		const sessionId = request.cookies.session;
-		if (typeof sessionId !== "string" || !sessionId) {
+		const sessionId = getCookie(request, "session");
+		if (sessionId === null) {
 			return { status: HttpStatus.UNAUTHORIZED, body: JSend.error("Session not found") };
 		}
 
@@ -61,8 +61,8 @@ export const authRouter = {
 		};
 	},
 	signOut: async ({ request, reply }) => {
-		const sessionId = request.cookies.session;
-		if (typeof sessionId === "string" && sessionId) {
+		const sessionId = getCookie(request, "session");
+		if (sessionId !== null) {
 			await database.sessions.deleteById(sessionId);
 		}
 

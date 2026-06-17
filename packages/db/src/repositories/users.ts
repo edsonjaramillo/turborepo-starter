@@ -23,6 +23,14 @@ export function createUsersRepository(db: Database) {
 			return db.query.usersTable.findFirst({ where: { email }, columns: { passwordHash: true } });
 		},
 
+		getUserPermissions(userId: string) {
+			return db.query.usersTable.findFirst({
+				where: { id: userId },
+				columns: { id: true },
+				with: { permissions: { columns: { name: true } } },
+			});
+		},
+
 		async getSignInProfileByEmail(email: string) {
 			const user = await db.query.usersTable.findFirst({
 				where: { email },
