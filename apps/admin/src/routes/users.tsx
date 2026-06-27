@@ -35,21 +35,13 @@ function RouteComponent() {
 
 const cardStyle = cn("flex w-80 flex-col gap-4 border p-6");
 
-type UsersList = {
-	users: {
-		id: string;
-		firstName: string;
-		lastName: string;
-	}[];
-};
-
+type UsersList = { users: { id: string; firstName: string; lastName: string }[] };
 function UsersList({ users }: UsersList) {
 	return (
 		<div className="space-y-2 p-6">
 			{users.map((user) => (
 				<div key={user.id} className={cardStyle}>
-					<span>{user.firstName}</span>
-					<span>{user.lastName}</span>
+					<span>{user.firstName}</span> <span>{user.lastName}</span>
 				</div>
 			))}
 		</div>
