@@ -37,10 +37,10 @@
 		"@repo/config": "workspace:*",
 		"@types/node": "catalog:",
 		"@types/pg": "^8.20.0",
-		"@typescript/native-preview": "catalog:",
 		"drizzle-kit": "1.0.0-rc.3-abc2ef6",
 		"oxfmt": "catalog:",
 		"oxlint": "catalog:",
-		"oxlint-tsgolint": "catalog:"
+		"oxlint-tsgolint": "catalog:",
+		"typescript": "catalog:"
 	}
 }

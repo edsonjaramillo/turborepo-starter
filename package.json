@@ -21,7 +21,6 @@
 			"@types/node": "^25.8.0",
 			"@types/react": "^19.2.2",
 			"@types/react-dom": "^19.2.2",
-			"@typescript/native-preview": "7.0.0-dev.20260613.1",
 			"@vitejs/plugin-react": "^6.0.2",
 			"nitro": "^3.0.260603-beta",
 			"oxfmt": "^0.50.0",
@@ -31,6 +30,7 @@
 			"react-dom": "^19.2.0",
 			"react-hook-form": "^7.76.0",
 			"tailwindcss": "^4.3.0",
+			"typescript": "^7.0.1-rc",
 			"vite": "^8.0.14",
 			"zod": "^4.4.3"
 		}
@@ -49,10 +49,10 @@
 	},
 	"devDependencies": {
 		"@infisical/cli": "catalog:",
-		"@typescript/native-preview": "catalog:",
 		"oxfmt": "catalog:",
 		"oxlint": "catalog:",
-		"turbo": "^2.9.14"
+		"turbo": "^2.9.14",
+		"typescript": "catalog:"
 	},
 	"engines": {
 		"node": ">=18"

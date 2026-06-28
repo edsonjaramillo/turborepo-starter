@@ -44,11 +44,11 @@
 		"@types/node": "catalog:",
 		"@types/react": "catalog:",
 		"@types/react-dom": "catalog:",
-		"@typescript/native-preview": "catalog:",
 		"@vitejs/plugin-react": "catalog:",
 		"oxfmt": "catalog:",
 		"oxlint": "catalog:",
 		"oxlint-tsgolint": "catalog:",
+		"typescript": "^7.0.1-rc",
 		"vite": "catalog:"
 	}
 }
